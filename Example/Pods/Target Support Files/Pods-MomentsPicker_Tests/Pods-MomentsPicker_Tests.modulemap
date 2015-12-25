@@ -1,0 +1,6 @@
+framework module Pods_MomentsPicker_Tests {
+  umbrella header "Pods-MomentsPicker_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}
