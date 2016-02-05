@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = "MomentsPicker"
   s.version          = "1.0.0"
-  s.summary          = "A short description of MomentsPicker."
+  s.summary          = "iOS Moments-like image picking library"
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -17,16 +17,17 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!  
   s.description      = <<-DESC
+  iOS Moments-like image picking library with multiple selection support.
                        DESC
 
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/MomentsPicker"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
+  s.homepage         = "https://github.com/zh-wang/MomentsPicker"
+  s.screenshots      = "http://i.imgur.com/jskUS9P.png"
   s.license          = 'MIT'
   s.author           = { "zh-wang" => "viennakanon@gmail.com" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/MomentsPicker.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.source           = { :git => "https://github.com/zh-wang/MomentsPicker.git", :tag => s.version.to_s }
+  s.social_media_url = 'https://twitter.com/viennakanon'
 
-  s.platform     = :ios, '8.0'
+  s.platform     = :ios, '8.3'
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes/**/*'

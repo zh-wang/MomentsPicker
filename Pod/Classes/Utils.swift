@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Photos
 
 class MeasureUtils {
     class func widthForText(text:String, font:UIFont) -> CGFloat{
@@ -88,4 +89,29 @@ extension UICollectionView {
         let path = NSIndexPath(forRow: dataSource.count - 1, inSection: 0)
         self.scrollToItemAtIndexPath(path, atScrollPosition: UICollectionViewScrollPosition.Top, animated: animated)
     }
+}
+
+public class Utils {
+    
+    public class func isPhotoAccessible() -> Bool {
+        return PHPhotoLibrary.authorizationStatus() == PHAuthorizationStatus.Authorized
+    }
+    
+    public class func safetyPhotoPickerWrapper(allowBlock allowBlock: Void -> Void, notAllowBlock: Void -> Void) {
+        if isPhotoAccessible() {
+            allowBlock()
+        } else {
+            PHPhotoLibrary.requestAuthorization { status in
+                dispatch_sync(dispatch_get_main_queue(), {
+                    switch status {
+                    case .Authorized:
+                        allowBlock()
+                    default:
+                        notAllowBlock()
+                    }
+                })
+            }
+        }
+    }
+    
 }

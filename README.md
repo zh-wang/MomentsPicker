@@ -1,5 +1,7 @@
 # MomentsPicker
 
+__iOS Moments-like image picking library__
+
 [![CI Status](http://img.shields.io/travis/zh-wang/MomentsPicker.svg?style=flat)](https://travis-ci.org/zh-wang/MomentsPicker)
 [![Version](https://img.shields.io/cocoapods/v/MomentsPicker.svg?style=flat)](http://cocoapods.org/pods/MomentsPicker)
 [![License](https://img.shields.io/cocoapods/l/MomentsPicker.svg?style=flat)](http://cocoapods.org/pods/MomentsPicker)
@@ -14,22 +16,27 @@ Only support for picking static images. So GIFs or videos will be treated as sta
 How to use  
 
     // ----------
-    // Use custom configurations here
-    let config = MPConfig()
-    config.selectionRange = (1, 2)
-    config.showSelectedCounter = true
-    config.startingContents = .Moments
+    // Ask for photo access first
+    Utils.safetyPhotoPickerWrapper(allowBlock: {
+        // Use custom configurations here
+        let config = MPConfig()
+        config.selectionRange = (1, 2)
+        config.showSelectedCounter = true
+        config.startingContents = .Moments
 
-    // Add a static foot view
-    let label = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44))
-    label.text = "Select 1 - 2 photos"
-    label.textColor = UIColor.blackColor()
-    label.backgroundColor = UIColor.lightGrayColor()
-    label.textAlignment = NSTextAlignment.Center
-    config.staticFooterView = label
+        // Add a static foot view
+        let label = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44))
+        label.text = "Select 1 - 2 photos"
+        label.textColor = UIColor.blackColor()
+        label.backgroundColor = UIColor.lightGrayColor()
+        label.textAlignment = NSTextAlignment.Center
+        config.staticFooterView = label
 
-    // present vc with config
-    self.presentViewController(MPRootViewController.newInstance(delegate: self, config: config), animated: true, completion: nil)
+        self.presentViewController(MPRootViewController.newInstance(delegate: self, config: config), animated: true, completion: nil)
+
+    }, notAllowBlock: {
+        // Not allowed. Please Enable Photo Access in settings.
+    })
     // ----------
 
 Other configuration options(See `MPConfig.swift`)  

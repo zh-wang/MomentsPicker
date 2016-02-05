@@ -31,18 +31,22 @@ class ViewController: UIViewController, MPViewControllerDelegate {
     }
     
     func tapImportBtn() {
-        let config = MPConfig()
-        config.selectionRange = (1, 2)
-        config.showSelectedCounter = true
-        
-        let label = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44))
-        label.text = "Select 1 - 2 photos"
-        label.textColor = UIColor.blackColor()
-        label.backgroundColor = UIColor.lightGrayColor()
-        label.textAlignment = NSTextAlignment.Center
-        config.staticFooterView = label
-        config.startingContents = .Moments
-        self.presentViewController(MPRootViewController.newInstance(delegate: self, config: config), animated: true, completion: nil)
+        Utils.safetyPhotoPickerWrapper(allowBlock: {
+                let config = MPConfig()
+                config.selectionRange = (1, 2)
+                config.showSelectedCounter = true
+                
+                let label = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44))
+                label.text = "Select 1 - 2 photos"
+                label.textColor = UIColor.blackColor()
+                label.backgroundColor = UIColor.lightGrayColor()
+                label.textAlignment = NSTextAlignment.Center
+                config.staticFooterView = label
+                config.startingContents = .Moments
+                self.presentViewController(MPRootViewController.newInstance(delegate: self, config: config), animated: true, completion: nil)
+            }, notAllowBlock: {
+                // Not allowed. Please Enable Photo Access in settings.
+            })
     }
     
     func pickCancelled(picker: UIViewController!) {
