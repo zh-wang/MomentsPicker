@@ -22,13 +22,13 @@ class MPAssetGridViewCell: UICollectionViewCell {
             self.imageView.frame = imageViewFrame
             self.imageView.contentMode = UIViewContentMode.ScaleAspectFill
             self.imageView.clipsToBounds = true
-            self.addSubview(imageView)
+            self.contentView.addSubview(imageView)
             
             let checkMarkFrame = CGRectMake(4, 4, frame.width / 4, frame.width / 4)
             self.checkMark.frame = checkMarkFrame
             self.checkMark.checked = false
             self.checkMark.checkMarkStyle = MPCheckMarkStyle.OpenCircle
-            self.addSubview(checkMark)
+            self.contentView.addSubview(checkMark)
         }
     }
 

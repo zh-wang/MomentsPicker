@@ -43,7 +43,7 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
         cellGrid!.delegate = self
         self.view.addSubview(cellGrid!)
         
-        let doneBtn = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapDoneButton"))
+        let doneBtn = UIBarButtonItem(title: self.config?.barBtnTitleDone, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapDoneButton"))
         self.navigationItem.rightBarButtonItem = doneBtn
         
         let scale = UIScreen.mainScreen().scale
@@ -65,11 +65,13 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
         
         self.toggleDoneAvailability()
         
-        self.cellGrid!.scroll2Bottom(dataSourceCount: self.assetsFetchResults!.count, animated: false) // scroll to bottom
+        if self.config!.startingPosition == .BOTTOM {
+            self.cellGrid!.scroll2Bottom(dataSourceCount: self.assetsFetchResults!.count, animated: false) // scroll to bottom
+        }
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.assetsFetchResults!.count
+        return self.assetsFetchResults?.count ?? 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -145,7 +147,8 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
         if let config = self.config {
             if config.showSelectedCounter {
                 let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
-                self.navigationItem.title = "\(counter) selected"
+                let selectedCounterText = String(format: config.selectedCounterText, arguments: [counter])
+                self.navigationItem.title = selectedCounterText
             }
         }
     }

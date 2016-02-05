@@ -12,9 +12,7 @@ import Photos
 class MPMomentsListViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,
     UICollectionViewDataSource {
     
-//    var test: [PHFetchResult] = []
-    
-    var selectDelegate: MPMomentsListViewCellDelegate?
+    var cellDelegate: MPMomentsListViewCellDelegate?
     
     var fetchResult: PHFetchResult?
     var assetCollection: PHAssetCollection?
@@ -23,24 +21,32 @@ class MPMomentsListViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
     var rowInMomeryList: Int = 0
     var title: UILabel = UILabel(frame: CGRectZero)
     var subtitle: UILabel = UILabel(frame: CGRectZero)
+    var dateLabel: UILabel = UILabel(frame: CGRectZero)
     var cellImageThumbnailRequestSize: CGSize = CGSizeMake(0, 0)
     var cellGrid: UICollectionView?
     
     let imageManager: PHImageManager = PHImageManager()
+    let titleFont = UIFont.systemFontOfSize(16)
+    let subtitleFont = UIFont.systemFontOfSize(12)
     
     // MARK: - override
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        title.font = UIFont.systemFontOfSize(18)
+        title.font = titleFont
         title.textColor = UIColor.blackColor()
         title.textAlignment = NSTextAlignment.Left
         self.contentView.addSubview(title)
         
-        subtitle.font = UIFont.systemFontOfSize(14)
+        subtitle.font = subtitleFont
         subtitle.textColor = UIColor.blackColor()
         subtitle.textAlignment = NSTextAlignment.Left
         self.contentView.addSubview(subtitle)
+        
+        dateLabel.font = subtitleFont
+        dateLabel.textColor = UIColor.blackColor()
+        dateLabel.textAlignment = NSTextAlignment.Right
+        self.contentView.addSubview(dateLabel)
         
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -65,55 +71,58 @@ class MPMomentsListViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        title.frame = CGRectMake(0, 0, self.bounds.width, CGFloat(MOMENTS_LIST_CELL_TITLE_HEIGHT)).insetBy(dx: 4, dy: 4)
-        subtitle.frame = CGRectMake(0, CGFloat(MOMENTS_LIST_CELL_TITLE_HEIGHT), self.bounds.width, CGFloat(MOMENTS_LIST_CELL_SUBTITLE_HEIGHT)).insetBy(dx: 4, dy: 4)
-        cellGrid!.frame = CGRectMake(0, CGFloat(MOMENTS_LIST_CELL_TITLE_AREA_HEIGHT), self.bounds.width, self.bounds.height - CGFloat(MOMENTS_LIST_CELL_TITLE_AREA_HEIGHT))
-    }
-    
     override func prepareForReuse() {
         
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.title.frame = CGRectMake(0, CGFloat(MOMETNS_LIST_CELL_TITLE_TOP_PADDING), self.bounds.width, CGFloat(MOMENTS_LIST_CELL_TITLE_HEIGHT))
+            .insetBy(dx: 4, dy: 4)
+            .offsetBy(dx: 0, dy: 2)
+        
+        let subtitleStartY = CGFloat(MOMETNS_LIST_CELL_TITLE_TOP_PADDING + MOMENTS_LIST_CELL_TITLE_HEIGHT)
+        let subtitleMaxWidth = self.bounds.width * 0.7
+        self.subtitle.frame = CGRectMake(0, subtitleStartY, subtitleMaxWidth, CGFloat(MOMENTS_LIST_CELL_SUBTITLE_HEIGHT))
+            .insetBy(dx: 4, dy: 4)
+            .offsetBy(dx: 0, dy: -2)
+        
+        let dateLabelMaxWidth = self.bounds.width * 0.3
+        self.dateLabel.frame = CGRectMake(self.bounds.width - dateLabelMaxWidth, subtitleStartY, dateLabelMaxWidth, CGFloat(MOMENTS_LIST_CELL_SUBTITLE_HEIGHT))
+            .insetBy(dx: 4, dy: 4)
+            .offsetBy(dx: -4, dy: -2)
+        
+        self.cellGrid!.frame = CGRectMake(0, CGFloat(MOMENTS_LIST_CELL_TITLE_AREA_HEIGHT), self.bounds.width, self.bounds.height - CGFloat(MOMENTS_LIST_CELL_TITLE_AREA_HEIGHT))
+    }
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.fetchResult!.count
+        return self.fetchResult?.count ?? 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("sgcell", forIndexPath: indexPath) as! MPAssetGridViewCell
         
-        let asset = self.fetchResult![indexPath.item] as! PHAsset
-        let options = PHImageRequestOptions()
-        options.deliveryMode = PHImageRequestOptionsDeliveryMode.FastFormat
-        
-        self.imageManager.requestImageForAsset(
-            asset,
-            targetSize: self.cellImageThumbnailRequestSize,
-            contentMode: PHImageContentMode.AspectFill,
-            options: options,
-            resultHandler: { result, info in
-                cell.imageView.image = result
-            })
-        
-        cell.checkMark.checked = cellChecked[indexPath.item]
+        if let phasset = self.ensureFetchedAssets(indexPath) {
+            let options = PHImageRequestOptions()
+            options.deliveryMode = PHImageRequestOptionsDeliveryMode.FastFormat
+            self.imageManager.requestImageForAsset(
+                phasset,
+                targetSize: self.cellImageThumbnailRequestSize,
+                contentMode: PHImageContentMode.AspectFill,
+                options: options,
+                resultHandler: { result, info in
+                    cell.imageView.image = result
+                })
+            cell.checkMark.checked = cellChecked[indexPath.item]
+        }
         
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if let selectDelegate = self.selectDelegate {
-            if selectDelegate.isSelectionEnable(row: self.rowInMomeryList, cellIndex: indexPath.item) {
-                let asset = self.fetchResult![indexPath.item] as! PHAsset
-                cellChecked[indexPath.item] = !cellChecked[indexPath.item]
-                cellGrid!.reloadItemsAtIndexPaths([indexPath])
-                if MPCheckMarkStorage.sharedInstance.removeIfAlreadyChecked(row: self.rowInMomeryList, cellIndex: indexPath.item, asset: asset) {
-                    // already checked, remove it
-                } else {
-                    MPCheckMarkStorage.sharedInstance.addEntry(row: self.rowInMomeryList, cellIndex: indexPath.item, asset: asset)
-                }
-                selectDelegate.didSelectImageInCell(row: self.rowInMomeryList, cellIndex: indexPath.item)
-            }
+        if let cellDelegate = self.cellDelegate {
+            self.handleSelectionAtIndexPath(indexPath, cellDelegate: cellDelegate)
         }
     }
     
@@ -129,4 +138,28 @@ class MPMomentsListViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
             self.cellChecked[checkedCellIndex] = true
         }
     }
+    
+    func ensureFetchedAssets(indexPath: NSIndexPath) -> PHAsset? {
+        let maybePhasset = self.fetchResult?[indexPath.item] as? PHAsset
+        return maybePhasset
+    }
+    
+    func handleSelectionAtIndexPath(indexPath: NSIndexPath, cellDelegate: MPMomentsListViewCellDelegate) {
+        
+        if !cellDelegate.isSelectionEnable(row: self.rowInMomeryList, cellIndex: indexPath.item) {
+            return
+        }
+        
+        if let phasset = self.ensureFetchedAssets(indexPath) {
+            cellChecked[indexPath.item] = !cellChecked[indexPath.item]
+            cellGrid!.reloadItemsAtIndexPaths([indexPath])
+            if MPCheckMarkStorage.sharedInstance.removeIfAlreadyChecked(row: self.rowInMomeryList, cellIndex: indexPath.item, asset: phasset) {
+                // already checked, remove it
+            } else {
+                MPCheckMarkStorage.sharedInstance.addEntry(row: self.rowInMomeryList, cellIndex: indexPath.item, asset: phasset)
+            }
+            cellDelegate.didSelectImageInCell(row: self.rowInMomeryList, cellIndex: indexPath.item)
+        }
+    }
+    
 }

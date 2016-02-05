@@ -26,6 +26,7 @@ public class MPRootViewController: UINavigationController {
         let tableViewController = MPListViewController(style: UITableViewStyle.Grouped)
         tableViewController.delegate = delegate
         tableViewController.config = config
+        config.safetyCheck()
         return MPRootViewController(rootViewController: tableViewController)
     }
     

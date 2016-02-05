@@ -20,7 +20,7 @@ class MPListViewController: UITableViewController {
     override func loadView() {
         super.loadView()
         
-        self.navigationItem.title = "Photos"
+        MPCheckMarkStorage.sharedInstance.clear()
         
         self.tableView.registerClass(MPListViewCell.classForCoder(), forCellReuseIdentifier: "cell")
         
@@ -40,13 +40,15 @@ class MPListViewController: UITableViewController {
         self.sectionFetchResults.append(smartAlbums)
         self.sectionFetchResults.append(topLevelUserCollections)
         
-        self.sectionTitles.append("All Photos")
-        self.sectionTitles.append("Moments")
-        self.sectionTitles.append("Smart Albums")
-        self.sectionTitles.append("User Albums")
+        self.sectionTitles.append(self.config?.categoryTitleAllPhotos ?? "All Photos")
+        self.sectionTitles.append(self.config?.categoryTitleMoments ?? "Moments")
+        self.sectionTitles.append(self.config?.categoryTitleSmartAlbums ?? "Smart Albums")
+        self.sectionTitles.append(self.config?.categoryTitleUserAlbums ?? "User Albums")
         
-        let cancelBtn = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapCancelButton"))
+        let cancelBtn = UIBarButtonItem(title: self.config?.barBtnTitleCancel ?? "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapCancelButton"))
         self.navigationItem.leftBarButtonItem = cancelBtn
+        
+        self.navigationItem.title = self.config?.viewControllerTitlePhotos ?? "Photos"
         
         if let config = config {
             switch config.startingContents {
@@ -87,9 +89,9 @@ class MPListViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         if indexPath.section == 0 {
-            cell.textLabel!.text = "All Photos"
+            cell.textLabel!.text = self.config?.categoryTitleAllPhotos ?? "All Photos"
         } else if indexPath.section == 1 {
-            cell.textLabel!.text = "Moments"
+            cell.textLabel!.text = self.config?.categoryTitleMoments ?? "Moments"
             /*
             let fetchResult = self.sectionFetchResults[indexPath.section]
             let collection = fetchResult[indexPath.row]
@@ -126,7 +128,7 @@ class MPListViewController: UITableViewController {
             
             if indexPath.section == 0 {
                 assetGridViewController.assetsFetchResults = fetchResult
-                assetGridViewController.navigationItem.title = "Photos"
+                assetGridViewController.navigationItem.title = self.config?.viewControllerTitlePhotos ?? "Photos"
             } else {
                 let collection = fetchResult[indexPath.row]
                 let assetCollection = collection as! PHAssetCollection
@@ -159,14 +161,14 @@ class MPListViewController: UITableViewController {
         momentsListViewController.delegate = self.delegate
         momentsListViewController.config = self.config
         momentsListViewController.prepareData(fetchResult)
-        momentsListViewController.title = "Moments"
+        momentsListViewController.title = self.config?.viewControllerTitleMoments ?? "Moments"
         self.navigationController?.pushViewController(momentsListViewController, animated: animated)
     }
     
     func jump2AllPhotos(fetchResult: PHFetchResult, animated: Bool) {
         let assetGridViewController = MPAssetGridViewController()
         assetGridViewController.assetsFetchResults = fetchResult
-        assetGridViewController.navigationItem.title = "Photos"
+        assetGridViewController.navigationItem.title = self.config?.viewControllerTitlePhotos ?? "Photos"
         assetGridViewController.delegate = self.delegate
         assetGridViewController.config = self.config
         assetGridViewController.prepareData()

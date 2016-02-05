@@ -50,7 +50,7 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableView.dataSource = self
         self.view.addSubview(self.tableView)
         
-        let doneBtn = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapDoneButton"))
+        let doneBtn = UIBarButtonItem(title: self.config?.barBtnTitleDone, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapDoneButton"))
         self.navigationItem.rightBarButtonItem = doneBtn
     }
     
@@ -65,12 +65,16 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
             footerView.frame = footerFrame
             self.view.addSubview(footerView)
         }
+        
+        self.toggleDoneAvailability()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.tableView.scroll2Bottom(dataSource: self.assetsFetchResultsOnlyImage, animated: false) // scroll to bottom
+        if self.config!.startingPosition == .BOTTOM {
+            self.tableView.scroll2Bottom(dataSource: self.assetsFetchResultsOnlyImage, animated: false) // scroll to bottom
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -92,6 +96,10 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         
         let cell = tableView.dequeueReusableCellWithIdentifier("mcell", forIndexPath: indexPath) as! MPMomentsListViewCell
         
+        cell.title.text = ""
+        cell.subtitle.text = ""
+        cell.dateLabel.text = ""
+        
         let collection = assetsFetchResults![indexPath.row]
         
         let dateFormatter = NSDateFormatter()
@@ -101,13 +109,17 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         var collectionTitle = "No Name Group"
         if collection.localizedTitle != "" {
             collectionTitle = collection.localizedTitle!
+            if let sdate = collection.startDate as NSDate? {
+                cell.dateLabel.text = sdate.toLocalizedString(needDate: true, needTime: false)
+            }
         } else {
             if let sdate = collection.startDate as NSDate? {
                 if let edate = collection.endDate as NSDate? {
-                    collectionTitle = dateFormatter.stringFromDate(sdate) + " - " + dateFormatter.stringFromDate(edate)
+                    collectionTitle = sdate.toLocalizedString(needDate: true, needTime: false) + " - " + edate.toLocalizedString(needDate: true, needTime: false)
                 }
             }
         }
+        
         cell.title.text = collectionTitle
         
         if let locationNames = collection.localizedLocationNames {
@@ -116,7 +128,7 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         }
         
         cell.prepareData(self.assetsFetchResultsOnlyImage[indexPath.row], row: indexPath.row)
-        cell.selectDelegate = self
+        cell.cellDelegate = self
         cell.cellGrid!.reloadData()
         
         /*
@@ -156,6 +168,10 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
     func didSelectImageInCell(row row: Int, cellIndex: Int) {
         self.changeTitleWhenSelected()
         self.toggleDoneAvailability()
+        if let delegate = self.delegate {
+            let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
+            delegate.didSelectionCounterChanged(self, counter: counter)
+        }
     }
     
     private func isSelectingNewItem(row row: Int, cellIndex: Int) -> Bool {
@@ -176,7 +192,8 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         if let config = self.config {
             if config.showSelectedCounter {
                 let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
-                self.navigationItem.title = "\(counter) selected"
+                let selectedCounterText = String(format: config.selectedCounterText, arguments: [counter])
+                self.navigationItem.title = selectedCounterText
             }
         }
     }

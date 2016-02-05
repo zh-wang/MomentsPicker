@@ -11,4 +11,5 @@ import Foundation
 public protocol MPViewControllerDelegate {
     func pickCancelled(picker: UIViewController!)
     func pickedAssets(picker: UIViewController!, didFinishPickingAssets assets: [AnyObject]!)
+    func didSelectionCounterChanged(picker: UIViewController!, counter: Int)
 }
