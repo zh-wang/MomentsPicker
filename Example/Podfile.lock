@@ -1,5 +1,5 @@
 PODS:
-  - MomentsPicker (0.1.0)
+  - MomentsPicker (1.0.0)
 
 DEPENDENCIES:
   - MomentsPicker (from `../`)
@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  MomentsPicker: 2f1d7afecd0a741c8132a126aa7b69796da5dd1c
+  MomentsPicker: 98f37c0123b8aa2886c7d75d00faced1c34725bf
 
 COCOAPODS: 0.39.0

@@ -8,30 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		1C61C0F9FA029E664F53420792653E63 /* Pods-MomentsPicker_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8D060422676EB5AEEE1761FCA9382 /* Pods-MomentsPicker_Example-dummy.m */; };
+		22C93D2B7AB6D64C72DD1B8AFBFD18E2 /* MPConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E3555D67835C96E7C27428867C6086 /* MPConfig.swift */; };
 		28CBC12DA5DF194072C90ADEFDC52857 /* Pods-MomentsPicker_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F4A0B6781B786BE1509AAC0A4F2A5AC /* Pods-MomentsPicker_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2DF35FEB13D05E92860D420EB045E15B /* MomentsPicker-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 02DE14093AF50B0BCF16350E5011F27A /* MomentsPicker-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		29FD2313022A469DE7B436EF4E3C38E4 /* MPCheckMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09DBE185814C91FD44027C027320D45 /* MPCheckMarkView.swift */; };
+		2A71A877E22DBE973510715D7957A17B /* MPAssetGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9877639B12889C4CE2B4213DD3203EF6 /* MPAssetGridViewController.swift */; };
+		2AFFF1A39AC0473E299B46E996EE5A9E /* MPMomentsListViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E46016A58C6633EC1721AB62E1E6DA /* MPMomentsListViewCellDelegate.swift */; };
+		2B1D94638CBECAD534791D8E064A8281 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704587E04ABA0270A569A1FAB95DF1B7 /* Constants.swift */; };
+		2C9A07B941CF5B6D8A6F5C4E9DFB0CA0 /* MomentsPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 93BAB4644E7FB472065F21D06443A861 /* MomentsPicker.bundle */; };
+		4BCAF177F6028EB631CBE3F73E111039 /* MPListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DE207C76777CA54D379A6B29E40D32 /* MPListViewCell.swift */; };
 		5DF01456E533A63824B9D762E5301FE5 /* Pods-MomentsPicker_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E045390EFB7F56839F771E84882A35AC /* Pods-MomentsPicker_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7169E1B50120F19440DC015BDD8FFC3C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E36762FF8E4A4E113EEC970F71E699C /* Foundation.framework */; };
+		6F9B122D9B6EDF87940E472A7C3981BE /* MPMomentsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C3B2AE1FE7BD4A7AB7DE49B22F024C /* MPMomentsListViewController.swift */; };
 		7B1E6308D605E5CEFF425CC2DEF7940D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E36762FF8E4A4E113EEC970F71E699C /* Foundation.framework */; };
-		7B201ABBB27995FFF5A32C531668D00C /* MPListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E05839E70C8725CD5A3D07EBE99BAEE7 /* MPListViewController.swift */; };
-		8361B56C20EA5E414F5EFA496449C9B7 /* MomentsPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 93BAB4644E7FB472065F21D06443A861 /* MomentsPicker.bundle */; };
+		830213B2B75CC975CAC9CB5317812BA1 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 697E2FB9C7768EDEA1457A96EDB78BE9 /* Photos.framework */; };
 		96ECF2D48D29C22AA911FDA960D69AA5 /* Pods-MomentsPicker_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A596F78043E87A06B152DFD41B7B2D5 /* Pods-MomentsPicker_Tests-dummy.m */; };
-		A87A29322E532807B07AF8B9E12C8E49 /* MPListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7512A970BBCF555B97D721B50E8BCE08 /* MPListViewCell.swift */; };
+		A2A91EC074FE6670AD058C6EC1C3EE1D /* MPCheckMarkStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFFEB17F3BA059A244746A95E88E33A /* MPCheckMarkStorage.swift */; };
+		A9217A138867DC4B1413EAD2B5C51A96 /* MPMomentsListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B631316679EC7D733771CE22753357F /* MPMomentsListViewCell.swift */; };
+		AE240BA770B6889D48A9C4A2EFE97D07 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF49F61B9C6DBA3743C9D56D37956883 /* Utils.swift */; };
 		C59C9DF108EC7ADA28B14F9C22ED94E6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E36762FF8E4A4E113EEC970F71E699C /* Foundation.framework */; };
-		C8236DC91C1EB599003846FC /* MPMomentsListViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8236DC81C1EB599003846FC /* MPMomentsListViewCellDelegate.swift */; };
-		C86C27971C042D5B00F1E48E /* MPAssetGridViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86C27961C042D5B00F1E48E /* MPAssetGridViewCell.swift */; };
-		C86C27991C042E4D00F1E48E /* MPAssetGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86C27981C042E4D00F1E48E /* MPAssetGridViewController.swift */; };
-		C86C279B1C043F2100F1E48E /* MPRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86C279A1C043F2100F1E48E /* MPRootViewController.swift */; };
-		C86C279D1C04628800F1E48E /* MPMomentsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86C279C1C04628800F1E48E /* MPMomentsListViewController.swift */; };
-		C86C279F1C04630800F1E48E /* MPMomentsListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86C279E1C04630800F1E48E /* MPMomentsListViewCell.swift */; };
-		C86C27A11C058FEF00F1E48E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86C27A01C058FEF00F1E48E /* Constants.swift */; };
-		C86C27A51C0D6FBC00F1E48E /* MPConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86C27A41C0D6FBC00F1E48E /* MPConfig.swift */; };
-		C86C27A71C0D8F2100F1E48E /* MPCheckMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86C27A61C0D8F2100F1E48E /* MPCheckMarkView.swift */; };
-		C86C27A91C0EA23800F1E48E /* MPCheckMarkStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86C27A81C0EA23800F1E48E /* MPCheckMarkStorage.swift */; };
-		C86C27AB1C0EA3F600F1E48E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86C27AA1C0EA3F600F1E48E /* Utils.swift */; };
-		C88209C21C16CBB300C59B0B /* MPViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88209C11C16CBB300C59B0B /* MPViewControllerDelegate.swift */; };
-		E5E49F0459E075CD295E1A7CA2AA7C3D /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 697E2FB9C7768EDEA1457A96EDB78BE9 /* Photos.framework */; };
-		FE7DD380DD281CC176474E8A349DFCBD /* MomentsPicker-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6D4C080C975AD6DCACD933094D3027 /* MomentsPicker-dummy.m */; };
+		C7CC79DC247DEA8B043936F8023B524B /* MPRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFDEBA0EE5F5699888F84782C0F3E57 /* MPRootViewController.swift */; };
+		D1D9BE956E15140AE02559C90D6BFB0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E36762FF8E4A4E113EEC970F71E699C /* Foundation.framework */; };
+		D9671139461F17E600BE399ED873BA1D /* MomentsPicker-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 02DE14093AF50B0BCF16350E5011F27A /* MomentsPicker-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E318121096E6AB1A78488E08E8D23369 /* MPListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801E7FBAE52C504384AF2E11D4219B65 /* MPListViewController.swift */; };
+		E6EDCDFC2B36B0BD2A8AD1FFEDBEA2ED /* MomentsPicker-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6D4C080C975AD6DCACD933094D3027 /* MomentsPicker-dummy.m */; };
+		EE373D0A81972F43D6F369C2E2B017CD /* MPAssetGridViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72452483F5FB4B0FB636CF1DE97959B /* MPAssetGridViewCell.swift */; };
+		FFFCFBE4951EF385F166FB144C8977A9 /* MPViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1ACD0F7B838EC382DB2FF893F14140 /* MPViewControllerDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,21 +39,21 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 03CB98E5976702976C81C1DAE09345C4;
+			remoteGlobalIDString = BB9EAD439412A3FEBE22234EA1ACA178;
 			remoteInfo = MomentsPicker;
 		};
 		BEE499B55A851FB4840FDCFF99DBCE2E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 03CB98E5976702976C81C1DAE09345C4;
+			remoteGlobalIDString = BB9EAD439412A3FEBE22234EA1ACA178;
 			remoteInfo = MomentsPicker;
 		};
-		F78978D5639718F5B236E44489754387 /* PBXContainerItemProxy */ = {
+		F880E4F7DB55DFEF356DE5907D787EC1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = EB32FFB4B3DE7B12E794C9E326284714;
+			remoteGlobalIDString = 6983CAE054449895FD68EA3329F0B978;
 			remoteInfo = "MomentsPicker-MomentsPicker";
 		};
 /* End PBXContainerItemProxy section */
@@ -64,20 +64,27 @@
 		06B62436E89F0FC1D0B20B9E0E2FEFC1 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1094E15ECCD251F4E20DDA56A352567F /* Pods-MomentsPicker_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MomentsPicker_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		12A6337FEEEC966FD9B17A42CCBB783B /* Pods-MomentsPicker_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MomentsPicker_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		12DE207C76777CA54D379A6B29E40D32 /* MPListViewCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPListViewCell.swift; sourceTree = "<group>"; };
 		1A2A66526B2D328B0B2D5B110BFE1028 /* MomentsPicker.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MomentsPicker.xcconfig; sourceTree = "<group>"; };
 		1C6D4C080C975AD6DCACD933094D3027 /* MomentsPicker-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MomentsPicker-dummy.m"; sourceTree = "<group>"; };
 		20F8AC25434D3C5212E8CCE1FDF8CD53 /* Pods-MomentsPicker_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-MomentsPicker_Example.modulemap"; sourceTree = "<group>"; };
 		29C8A9BAC81720F3A34CBC8BE699B361 /* Pods-MomentsPicker_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MomentsPicker_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		2CD8D060422676EB5AEEE1761FCA9382 /* Pods-MomentsPicker_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-MomentsPicker_Example-dummy.m"; sourceTree = "<group>"; };
+		2DFDEBA0EE5F5699888F84782C0F3E57 /* MPRootViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPRootViewController.swift; sourceTree = "<group>"; };
 		2FD10461BAEF104289926EC809DBA40A /* Pods-MomentsPicker_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MomentsPicker_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		36D69EEB0604E10BDABBFF2810769EF4 /* Pods-MomentsPicker_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MomentsPicker_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		3A596F78043E87A06B152DFD41B7B2D5 /* Pods-MomentsPicker_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-MomentsPicker_Tests-dummy.m"; sourceTree = "<group>"; };
 		4EC1E981E63A82BE96D3BE265EB523F4 /* MomentsPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MomentsPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B1ACD0F7B838EC382DB2FF893F14140 /* MPViewControllerDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPViewControllerDelegate.swift; sourceTree = "<group>"; };
+		5B631316679EC7D733771CE22753357F /* MPMomentsListViewCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPMomentsListViewCell.swift; sourceTree = "<group>"; };
+		67C3B2AE1FE7BD4A7AB7DE49B22F024C /* MPMomentsListViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPMomentsListViewController.swift; sourceTree = "<group>"; };
 		697E2FB9C7768EDEA1457A96EDB78BE9 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/Photos.framework; sourceTree = DEVELOPER_DIR; };
 		6F4A0B6781B786BE1509AAC0A4F2A5AC /* Pods-MomentsPicker_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-MomentsPicker_Tests-umbrella.h"; sourceTree = "<group>"; };
+		704587E04ABA0270A569A1FAB95DF1B7 /* Constants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		72D365F9295A335903BAC981839FD53F /* Pods-MomentsPicker_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MomentsPicker_Example-frameworks.sh"; sourceTree = "<group>"; };
-		7512A970BBCF555B97D721B50E8BCE08 /* MPListViewCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPListViewCell.swift; sourceTree = "<group>"; };
+		801E7FBAE52C504384AF2E11D4219B65 /* MPListViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPListViewController.swift; sourceTree = "<group>"; };
 		93BAB4644E7FB472065F21D06443A861 /* MomentsPicker.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MomentsPicker.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		9877639B12889C4CE2B4213DD3203EF6 /* MPAssetGridViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPAssetGridViewController.swift; sourceTree = "<group>"; };
 		9A6675B166527341D0FDCB6CB7D231EC /* Pods-MomentsPicker_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MomentsPicker_Example.release.xcconfig"; sourceTree = "<group>"; };
 		9D2000DA7B93553D5FBF025F33BF48EB /* Pods-MomentsPicker_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MomentsPicker_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		9E36762FF8E4A4E113EEC970F71E699C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -85,42 +92,37 @@
 		AC7C2C450025F235C04D3DD414869BDE /* Pods-MomentsPicker_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-MomentsPicker_Tests.modulemap"; sourceTree = "<group>"; };
 		AC9F1CC400EAEE118FD0FAC8CF7F2AC5 /* MomentsPicker.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = MomentsPicker.modulemap; sourceTree = "<group>"; };
 		B03D92535EF39A0FC089F7F9F5CAD395 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B09DBE185814C91FD44027C027320D45 /* MPCheckMarkView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPCheckMarkView.swift; sourceTree = "<group>"; };
 		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BB62B48B5C13826AE2469AD232B343D0 /* Pods_MomentsPicker_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MomentsPicker_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C8236DC81C1EB599003846FC /* MPMomentsListViewCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPMomentsListViewCellDelegate.swift; sourceTree = "<group>"; };
-		C86C27961C042D5B00F1E48E /* MPAssetGridViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPAssetGridViewCell.swift; sourceTree = "<group>"; };
-		C86C27981C042E4D00F1E48E /* MPAssetGridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPAssetGridViewController.swift; sourceTree = "<group>"; };
-		C86C279A1C043F2100F1E48E /* MPRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPRootViewController.swift; sourceTree = "<group>"; };
-		C86C279C1C04628800F1E48E /* MPMomentsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPMomentsListViewController.swift; sourceTree = "<group>"; };
-		C86C279E1C04630800F1E48E /* MPMomentsListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPMomentsListViewCell.swift; sourceTree = "<group>"; };
-		C86C27A01C058FEF00F1E48E /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		C86C27A41C0D6FBC00F1E48E /* MPConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPConfig.swift; sourceTree = "<group>"; };
-		C86C27A61C0D8F2100F1E48E /* MPCheckMarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPCheckMarkView.swift; sourceTree = "<group>"; };
-		C86C27A81C0EA23800F1E48E /* MPCheckMarkStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPCheckMarkStorage.swift; sourceTree = "<group>"; };
-		C86C27AA1C0EA3F600F1E48E /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		C88209C11C16CBB300C59B0B /* MPViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPViewControllerDelegate.swift; sourceTree = "<group>"; };
+		CBFFEB17F3BA059A244746A95E88E33A /* MPCheckMarkStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPCheckMarkStorage.swift; sourceTree = "<group>"; };
 		D9707042DC2113B99521B99D0528AE5C /* MomentsPicker-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MomentsPicker-prefix.pch"; sourceTree = "<group>"; };
 		E045390EFB7F56839F771E84882A35AC /* Pods-MomentsPicker_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-MomentsPicker_Example-umbrella.h"; sourceTree = "<group>"; };
-		E05839E70C8725CD5A3D07EBE99BAEE7 /* MPListViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPListViewController.swift; sourceTree = "<group>"; };
+		E3E46016A58C6633EC1721AB62E1E6DA /* MPMomentsListViewCellDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPMomentsListViewCellDelegate.swift; sourceTree = "<group>"; };
 		E8BFDCCB52AA34681271F655D69E70A6 /* Pods-MomentsPicker_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MomentsPicker_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		EC6454AE7C32F3DB4D74E8D9E8AE1055 /* Pods-MomentsPicker_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MomentsPicker_Tests-resources.sh"; sourceTree = "<group>"; };
+		F0E3555D67835C96E7C27428867C6086 /* MPConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPConfig.swift; sourceTree = "<group>"; };
 		F21771DD41E3F5D213C83292DD6405A3 /* Pods-MomentsPicker_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MomentsPicker_Tests-frameworks.sh"; sourceTree = "<group>"; };
+		F72452483F5FB4B0FB636CF1DE97959B /* MPAssetGridViewCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPAssetGridViewCell.swift; sourceTree = "<group>"; };
 		FD6D5C24413D6C0A69ACCEA599AA29C7 /* Pods_MomentsPicker_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MomentsPicker_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF49F61B9C6DBA3743C9D56D37956883 /* Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		05F9E8540032C3FF912CA15DB3F46711 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		6789D4BC4EFA34A02785FDFD281E922C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				C59C9DF108EC7ADA28B14F9C22ED94E6 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74953FEA4A8F587BB5517B14D88E4882 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1D9BE956E15140AE02559C90D6BFB0A /* Foundation.framework in Frameworks */,
+				830213B2B75CC975CAC9CB5317812BA1 /* Photos.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,12 +134,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C168A688E1CCAF040314E4C8EC1D4232 /* Frameworks */ = {
+		F13939EE4927A812C1C9EAAE36F5CBD4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7169E1B50120F19440DC015BDD8FFC3C /* Foundation.framework in Frameworks */,
-				E5E49F0459E075CD295E1A7CA2AA7C3D /* Photos.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,14 +176,6 @@
 			path = "Example/Pods/Target Support Files/MomentsPicker";
 			sourceTree = "<group>";
 		};
-		235DC35CDDF25E70C6BBD56382B65561 /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				82883320C7AB8F6E55CA0CEEBD72F046 /* Classes */,
-			);
-			path = Pod;
-			sourceTree = "<group>";
-		};
 		42AFDCA6943FFD136B113E8FFA19A67B /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,7 +198,7 @@
 		656B028EDA60E04C12DB5B8B0E0B3E24 /* MomentsPicker */ = {
 			isa = PBXGroup;
 			children = (
-				235DC35CDDF25E70C6BBD56382B65561 /* Pod */,
+				8E3DAD8BA91EDD178486A55521B0E0A9 /* Pod */,
 				21E3D5D994D4633D169B2BBD463796DB /* Support Files */,
 			);
 			name = MomentsPicker;
@@ -251,23 +243,31 @@
 			);
 			sourceTree = "<group>";
 		};
-		82883320C7AB8F6E55CA0CEEBD72F046 /* Classes */ = {
+		8E3DAD8BA91EDD178486A55521B0E0A9 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				C88209C11C16CBB300C59B0B /* MPViewControllerDelegate.swift */,
-				C86C279A1C043F2100F1E48E /* MPRootViewController.swift */,
-				7512A970BBCF555B97D721B50E8BCE08 /* MPListViewCell.swift */,
-				E05839E70C8725CD5A3D07EBE99BAEE7 /* MPListViewController.swift */,
-				C86C27961C042D5B00F1E48E /* MPAssetGridViewCell.swift */,
-				C86C27981C042E4D00F1E48E /* MPAssetGridViewController.swift */,
-				C86C279E1C04630800F1E48E /* MPMomentsListViewCell.swift */,
-				C8236DC81C1EB599003846FC /* MPMomentsListViewCellDelegate.swift */,
-				C86C279C1C04628800F1E48E /* MPMomentsListViewController.swift */,
-				C86C27A61C0D8F2100F1E48E /* MPCheckMarkView.swift */,
-				C86C27A81C0EA23800F1E48E /* MPCheckMarkStorage.swift */,
-				C86C27A01C058FEF00F1E48E /* Constants.swift */,
-				C86C27A41C0D6FBC00F1E48E /* MPConfig.swift */,
-				C86C27AA1C0EA3F600F1E48E /* Utils.swift */,
+				C4802D8B4F695D0EDAE29EDBCA080C4D /* Classes */,
+			);
+			path = Pod;
+			sourceTree = "<group>";
+		};
+		C4802D8B4F695D0EDAE29EDBCA080C4D /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				704587E04ABA0270A569A1FAB95DF1B7 /* Constants.swift */,
+				F72452483F5FB4B0FB636CF1DE97959B /* MPAssetGridViewCell.swift */,
+				9877639B12889C4CE2B4213DD3203EF6 /* MPAssetGridViewController.swift */,
+				CBFFEB17F3BA059A244746A95E88E33A /* MPCheckMarkStorage.swift */,
+				B09DBE185814C91FD44027C027320D45 /* MPCheckMarkView.swift */,
+				F0E3555D67835C96E7C27428867C6086 /* MPConfig.swift */,
+				12DE207C76777CA54D379A6B29E40D32 /* MPListViewCell.swift */,
+				801E7FBAE52C504384AF2E11D4219B65 /* MPListViewController.swift */,
+				5B631316679EC7D733771CE22753357F /* MPMomentsListViewCell.swift */,
+				E3E46016A58C6633EC1721AB62E1E6DA /* MPMomentsListViewCellDelegate.swift */,
+				67C3B2AE1FE7BD4A7AB7DE49B22F024C /* MPMomentsListViewController.swift */,
+				2DFDEBA0EE5F5699888F84782C0F3E57 /* MPRootViewController.swift */,
+				5B1ACD0F7B838EC382DB2FF893F14140 /* MPViewControllerDelegate.swift */,
+				FF49F61B9C6DBA3743C9D56D37956883 /* Utils.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -300,11 +300,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		65F127E5FB4D24C9BAA77134354DC97C /* Headers */ = {
+		77F5015B7FF483E932ECCC4B05E19AB1 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DF35FEB13D05E92860D420EB045E15B /* MomentsPicker-umbrella.h in Headers */,
+				D9671139461F17E600BE399ED873BA1D /* MomentsPicker-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,24 +319,22 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		03CB98E5976702976C81C1DAE09345C4 /* MomentsPicker */ = {
+		6983CAE054449895FD68EA3329F0B978 /* MomentsPicker-MomentsPicker */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2697B102979EBA5C0F64DEE2857E2D44 /* Build configuration list for PBXNativeTarget "MomentsPicker" */;
+			buildConfigurationList = DE68420D9AF82F960CD3B6DF224050DE /* Build configuration list for PBXNativeTarget "MomentsPicker-MomentsPicker" */;
 			buildPhases = (
-				117FBB247571970DE405914E4F8A597C /* Sources */,
-				C168A688E1CCAF040314E4C8EC1D4232 /* Frameworks */,
-				44C5C1F46C02301C46F9F1F53A42F186 /* Resources */,
-				65F127E5FB4D24C9BAA77134354DC97C /* Headers */,
+				1C6AF5F000C771B20D737B0062F46354 /* Sources */,
+				F13939EE4927A812C1C9EAAE36F5CBD4 /* Frameworks */,
+				D59C22F25A1554357300A9DD20DF1D1C /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				C0F3AECF0680CEE4F67AAE83BB224B07 /* PBXTargetDependency */,
 			);
-			name = MomentsPicker;
-			productName = MomentsPicker;
-			productReference = 4EC1E981E63A82BE96D3BE265EB523F4 /* MomentsPicker.framework */;
-			productType = "com.apple.product-type.framework";
+			name = "MomentsPicker-MomentsPicker";
+			productName = "MomentsPicker-MomentsPicker";
+			productReference = 93BAB4644E7FB472065F21D06443A861 /* MomentsPicker.bundle */;
+			productType = "com.apple.product-type.bundle";
 		};
 		B2E90EA02F349F1134D95DB8E92F1572 /* Pods-MomentsPicker_Example */ = {
 			isa = PBXNativeTarget;
@@ -354,6 +352,25 @@
 			name = "Pods-MomentsPicker_Example";
 			productName = "Pods-MomentsPicker_Example";
 			productReference = BB62B48B5C13826AE2469AD232B343D0 /* Pods_MomentsPicker_Example.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		BB9EAD439412A3FEBE22234EA1ACA178 /* MomentsPicker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 61C14D17B82BB76C5B10FE01C4B5305B /* Build configuration list for PBXNativeTarget "MomentsPicker" */;
+			buildPhases = (
+				E314818FB01B624AADFBD71C3EB92D83 /* Sources */,
+				74953FEA4A8F587BB5517B14D88E4882 /* Frameworks */,
+				85A1132F0ADC259743F723CDC23B2DFE /* Resources */,
+				77F5015B7FF483E932ECCC4B05E19AB1 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				70BB9C49BD45F950614F89DC9927989F /* PBXTargetDependency */,
+			);
+			name = MomentsPicker;
+			productName = MomentsPicker;
+			productReference = 4EC1E981E63A82BE96D3BE265EB523F4 /* MomentsPicker.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		DDAA6764C0152B53DA43F5FC082BE003 /* Pods-MomentsPicker_Tests */ = {
@@ -374,23 +391,6 @@
 			productReference = FD6D5C24413D6C0A69ACCEA599AA29C7 /* Pods_MomentsPicker_Tests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		EB32FFB4B3DE7B12E794C9E326284714 /* MomentsPicker-MomentsPicker */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2C7811FEB56B5A9C029F9F52B264C7A0 /* Build configuration list for PBXNativeTarget "MomentsPicker-MomentsPicker" */;
-			buildPhases = (
-				D444537D3DAAF172250B9913D3EA4BF3 /* Sources */,
-				05F9E8540032C3FF912CA15DB3F46711 /* Frameworks */,
-				208193BC87C1C6722C26802309AC0963 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "MomentsPicker-MomentsPicker";
-			productName = "MomentsPicker-MomentsPicker";
-			productReference = 93BAB4644E7FB472065F21D06443A861 /* MomentsPicker.bundle */;
-			productType = "com.apple.product-type.bundle";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -398,7 +398,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -412,8 +412,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				03CB98E5976702976C81C1DAE09345C4 /* MomentsPicker */,
-				EB32FFB4B3DE7B12E794C9E326284714 /* MomentsPicker-MomentsPicker */,
+				BB9EAD439412A3FEBE22234EA1ACA178 /* MomentsPicker */,
+				6983CAE054449895FD68EA3329F0B978 /* MomentsPicker-MomentsPicker */,
 				B2E90EA02F349F1134D95DB8E92F1572 /* Pods-MomentsPicker_Example */,
 				DDAA6764C0152B53DA43F5FC082BE003 /* Pods-MomentsPicker_Tests */,
 			);
@@ -421,18 +421,18 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		208193BC87C1C6722C26802309AC0963 /* Resources */ = {
+		85A1132F0ADC259743F723CDC23B2DFE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C9A07B941CF5B6D8A6F5C4E9DFB0CA0 /* MomentsPicker.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		44C5C1F46C02301C46F9F1F53A42F186 /* Resources */ = {
+		D59C22F25A1554357300A9DD20DF1D1C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8361B56C20EA5E414F5EFA496449C9B7 /* MomentsPicker.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,25 +447,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		117FBB247571970DE405914E4F8A597C /* Sources */ = {
+		1C6AF5F000C771B20D737B0062F46354 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8236DC91C1EB599003846FC /* MPMomentsListViewCellDelegate.swift in Sources */,
-				FE7DD380DD281CC176474E8A349DFCBD /* MomentsPicker-dummy.m in Sources */,
-				C86C279B1C043F2100F1E48E /* MPRootViewController.swift in Sources */,
-				C86C27A91C0EA23800F1E48E /* MPCheckMarkStorage.swift in Sources */,
-				A87A29322E532807B07AF8B9E12C8E49 /* MPListViewCell.swift in Sources */,
-				7B201ABBB27995FFF5A32C531668D00C /* MPListViewController.swift in Sources */,
-				C86C27AB1C0EA3F600F1E48E /* Utils.swift in Sources */,
-				C86C27971C042D5B00F1E48E /* MPAssetGridViewCell.swift in Sources */,
-				C86C279F1C04630800F1E48E /* MPMomentsListViewCell.swift in Sources */,
-				C86C27991C042E4D00F1E48E /* MPAssetGridViewController.swift in Sources */,
-				C86C27A51C0D6FBC00F1E48E /* MPConfig.swift in Sources */,
-				C86C27A71C0D8F2100F1E48E /* MPCheckMarkView.swift in Sources */,
-				C86C279D1C04628800F1E48E /* MPMomentsListViewController.swift in Sources */,
-				C86C27A11C058FEF00F1E48E /* Constants.swift in Sources */,
-				C88209C21C16CBB300C59B0B /* MPViewControllerDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,10 +462,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D444537D3DAAF172250B9913D3EA4BF3 /* Sources */ = {
+		E314818FB01B624AADFBD71C3EB92D83 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B1D94638CBECAD534791D8E064A8281 /* Constants.swift in Sources */,
+				E6EDCDFC2B36B0BD2A8AD1FFEDBEA2ED /* MomentsPicker-dummy.m in Sources */,
+				EE373D0A81972F43D6F369C2E2B017CD /* MPAssetGridViewCell.swift in Sources */,
+				2A71A877E22DBE973510715D7957A17B /* MPAssetGridViewController.swift in Sources */,
+				A2A91EC074FE6670AD058C6EC1C3EE1D /* MPCheckMarkStorage.swift in Sources */,
+				29FD2313022A469DE7B436EF4E3C38E4 /* MPCheckMarkView.swift in Sources */,
+				22C93D2B7AB6D64C72DD1B8AFBFD18E2 /* MPConfig.swift in Sources */,
+				4BCAF177F6028EB631CBE3F73E111039 /* MPListViewCell.swift in Sources */,
+				E318121096E6AB1A78488E08E8D23369 /* MPListViewController.swift in Sources */,
+				A9217A138867DC4B1413EAD2B5C51A96 /* MPMomentsListViewCell.swift in Sources */,
+				2AFFF1A39AC0473E299B46E996EE5A9E /* MPMomentsListViewCellDelegate.swift in Sources */,
+				6F9B122D9B6EDF87940E472A7C3981BE /* MPMomentsListViewController.swift in Sources */,
+				C7CC79DC247DEA8B043936F8023B524B /* MPRootViewController.swift in Sources */,
+				FFFCFBE4951EF385F166FB144C8977A9 /* MPViewControllerDelegate.swift in Sources */,
+				AE240BA770B6889D48A9C4A2EFE97D07 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,24 +490,52 @@
 		14CE46CE92D4D76DBC1ACC7FEB1BCA80 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = MomentsPicker;
-			target = 03CB98E5976702976C81C1DAE09345C4 /* MomentsPicker */;
+			target = BB9EAD439412A3FEBE22234EA1ACA178 /* MomentsPicker */;
 			targetProxy = BEE499B55A851FB4840FDCFF99DBCE2E /* PBXContainerItemProxy */;
 		};
-		C0F3AECF0680CEE4F67AAE83BB224B07 /* PBXTargetDependency */ = {
+		70BB9C49BD45F950614F89DC9927989F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "MomentsPicker-MomentsPicker";
-			target = EB32FFB4B3DE7B12E794C9E326284714 /* MomentsPicker-MomentsPicker */;
-			targetProxy = F78978D5639718F5B236E44489754387 /* PBXContainerItemProxy */;
+			target = 6983CAE054449895FD68EA3329F0B978 /* MomentsPicker-MomentsPicker */;
+			targetProxy = F880E4F7DB55DFEF356DE5907D787EC1 /* PBXContainerItemProxy */;
 		};
 		D35A73CB8D4B6C5538FDFBA5E0217333 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = MomentsPicker;
-			target = 03CB98E5976702976C81C1DAE09345C4 /* MomentsPicker */;
+			target = BB9EAD439412A3FEBE22234EA1ACA178 /* MomentsPicker */;
 			targetProxy = 381233734DD2E6DE785F355C2A1E299B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		0BAA942D0EEC76DBD708E5CB49768D1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A2A66526B2D328B0B2D5B110BFE1028 /* MomentsPicker.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/MomentsPicker/MomentsPicker-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/MomentsPicker/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/MomentsPicker/MomentsPicker.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = MomentsPicker;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		10DE1947DAC0ED28F6C0A9F9BD75D546 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -542,34 +570,6 @@
 			};
 			name = Release;
 		};
-		219A059A0F00C9B6C8ED7C0996C4B640 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1A2A66526B2D328B0B2D5B110BFE1028 /* MomentsPicker.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/MomentsPicker/MomentsPicker-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/MomentsPicker/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/MomentsPicker/MomentsPicker.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = MomentsPicker;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		32CF80762287C7797EC533FB1A5B7C6C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2FD10461BAEF104289926EC809DBA40A /* Pods-MomentsPicker_Example.debug.xcconfig */;
@@ -591,37 +591,7 @@
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Pods_MomentsPicker_Example;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		45600BCA74DB40C91D310D15C997B27B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1A2A66526B2D328B0B2D5B110BFE1028 /* MomentsPicker.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/MomentsPicker/MomentsPicker-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/MomentsPicker/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/MomentsPicker/MomentsPicker.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = MomentsPicker;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -649,7 +619,6 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -692,13 +661,24 @@
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Pods_MomentsPicker_Tests;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		8776ACFF69A07B387AF297080E1B4509 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A2A66526B2D328B0B2D5B110BFE1028 /* MomentsPicker.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				PRODUCT_NAME = MomentsPicker;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};
@@ -723,7 +703,6 @@
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Pods_MomentsPicker_Tests;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -734,7 +713,7 @@
 			};
 			name = Debug;
 		};
-		9492355B39E0EF4F666EDF79DAA6EBB3 /* Debug */ = {
+		C7262F2D6881EC68822FAC1B70ABF170 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1A2A66526B2D328B0B2D5B110BFE1028 /* MomentsPicker.xcconfig */;
 			buildSettings = {
@@ -767,7 +746,6 @@
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Pods_MomentsPicker_Example;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -777,15 +755,30 @@
 			};
 			name = Release;
 		};
-		F49854A5E4ED45A55F36117B1F08E3FC /* Release */ = {
+		EFB17DD131164A2D7FF41517F6A0727B /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1A2A66526B2D328B0B2D5B110BFE1028 /* MomentsPicker.xcconfig */;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/MomentsPicker/MomentsPicker-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/MomentsPicker/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/MomentsPicker/MomentsPicker.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = MomentsPicker;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				WRAPPER_EXTENSION = bundle;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -810,29 +803,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2697B102979EBA5C0F64DEE2857E2D44 /* Build configuration list for PBXNativeTarget "MomentsPicker" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				45600BCA74DB40C91D310D15C997B27B /* Debug */,
-				219A059A0F00C9B6C8ED7C0996C4B640 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2C7811FEB56B5A9C029F9F52B264C7A0 /* Build configuration list for PBXNativeTarget "MomentsPicker-MomentsPicker" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9492355B39E0EF4F666EDF79DAA6EBB3 /* Debug */,
-				F49854A5E4ED45A55F36117B1F08E3FC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				552D02D5BA751AC2E8790D2811D496CA /* Debug */,
 				10DE1947DAC0ED28F6C0A9F9BD75D546 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		61C14D17B82BB76C5B10FE01C4B5305B /* Build configuration list for PBXNativeTarget "MomentsPicker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0BAA942D0EEC76DBD708E5CB49768D1E /* Debug */,
+				EFB17DD131164A2D7FF41517F6A0727B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DE68420D9AF82F960CD3B6DF224050DE /* Build configuration list for PBXNativeTarget "MomentsPicker-MomentsPicker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C7262F2D6881EC68822FAC1B70ABF170 /* Debug */,
+				8776ACFF69A07B387AF297080E1B4509 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
