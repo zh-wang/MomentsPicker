@@ -7,6 +7,8 @@ __iOS Moments-like image picking library__
 [![License](https://img.shields.io/cocoapods/l/MomentsPicker.svg?style=flat)](http://cocoapods.org/pods/MomentsPicker)
 [![Platform](https://img.shields.io/cocoapods/p/MomentsPicker.svg?style=flat)](http://cocoapods.org/pods/MomentsPicker)
 
+![Sample Image](http://i.imgur.com/jskUS9P.png)
+
 ## Usage
 
 This lib provides a moment-like style for picking multiple images from iOS device's gallery.  
