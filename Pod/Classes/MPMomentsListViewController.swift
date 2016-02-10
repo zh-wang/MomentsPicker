@@ -18,6 +18,7 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
     var assetsFetchResultsOnlyImage: [PHFetchResult] = []
     
     var tableView: UITableView = UITableView(frame: CGRectZero, style: UITableViewStyle.Plain)
+    var footerView: DynamicBottomBar = DynamicBottomBar(frame: CGRectZero)
     
     func prepareData(asstesFetchResults: PHFetchResult) {
         self.assetsFetchResults = asstesFetchResults
@@ -50,23 +51,38 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableView.dataSource = self
         self.view.addSubview(self.tableView)
         
-        let doneBtn = UIBarButtonItem(title: self.config?.barBtnTitleDone, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapDoneButton"))
-        self.navigationItem.rightBarButtonItem = doneBtn
+//        let doneBtn = UIBarButtonItem(title: self.config?.barBtnTitleDone, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapDoneButton"))
+//        self.navigationItem.rightBarButtonItem = doneBtn
+        
+        let cancelBtn = UIBarButtonItem(title: self.config?.barBtnTitleCancel, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapCancelButton"))
+        self.navigationItem.rightBarButtonItem = cancelBtn
+        self.navigationItem.rightBarButtonItem?.enabled = true
     }
     
     override func viewDidLoad() {
-        // Add footer view if needed
-        if let footerView = self.config?.staticFooterView {
-            let footerHeight = footerView.frame.height
-            let bounds = UIScreen.mainScreen().bounds
-            self.tableView.frame = CGRectMake(0, 0, bounds.width, bounds.height - footerHeight)
-            
-            let footerFrame = CGRectMake(0, bounds.height - footerHeight, bounds.width, footerHeight)
-            footerView.frame = footerFrame
-            self.view.addSubview(footerView)
-        }
         
-        self.toggleDoneAvailability()
+        // Add footer view if needed
+//        if let footerView = self.config?.staticFooterView {
+//            let footerHeight = footerView.frame.height
+//            let bounds = UIScreen.mainScreen().bounds
+//            self.tableView.frame = CGRectMake(0, 0, bounds.width, bounds.height - footerHeight)
+//            
+//            let footerFrame = CGRectMake(0, bounds.height - footerHeight, bounds.width, footerHeight)
+//            footerView.frame = footerFrame
+//            self.view.addSubview(footerView)
+//        }
+        
+        self.footerView.frame = CGRectMake(0, self.view.bounds.height - 48, self.view.bounds.width, 48)
+        let footerHeight = footerView.frame.height
+        self.tableView.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height - footerHeight)
+        self.view.addSubview(footerView)
+        if let okBtnColor = self.config?.selectionEnabledColor {
+            self.footerView.setOkBtnHighlightColor(okBtnColor)
+        }
+        if let range = self.config?.selectionRange {
+            self.footerView.updateSelectionRange(range)
+        }
+        self.footerView.okBtn.addTarget(self, action: Selector("onTapDoneButton"), forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -160,6 +176,13 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
+    func onTapCancelButton() {
+        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
+        if let delegate = self.delegate {
+            delegate.pickCancelled(self)
+        }
+    }
+    
     func isSelectionEnable(row row: Int, cellIndex: Int) -> Bool {
         // If already selected too many and want to select a new one, disallow
         return !(self.isSelectedTooMany() && isSelectingNewItem(row: row, cellIndex: cellIndex))
@@ -167,9 +190,11 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
     
     func didSelectImageInCell(row row: Int, cellIndex: Int) {
         self.changeTitleWhenSelected()
-        self.toggleDoneAvailability()
+        
+        let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
+        self.footerView.updateSelectionCounter(counter)
+        
         if let delegate = self.delegate {
-            let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
             delegate.didSelectionCounterChanged(self, counter: counter)
         }
     }
@@ -194,21 +219,6 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
                 let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
                 let selectedCounterText = String(format: config.selectedCounterText, arguments: [counter])
                 self.navigationItem.title = selectedCounterText
-            }
-        }
-    }
-    
-    private func toggleDoneAvailability() {
-        if let config = self.config {
-            if let selectionRange = config.selectionRange {
-                let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
-                let min = selectionRange.0
-                let max = selectionRange.1
-                if counter >= min && counter <= max {
-                    self.navigationItem.rightBarButtonItem!.enabled = true
-                } else {
-                    self.navigationItem.rightBarButtonItem!.enabled = false
-                }
             }
         }
     }

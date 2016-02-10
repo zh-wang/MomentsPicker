@@ -21,7 +21,8 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
     
     var assetGridThumbnailSize: CGSize = CGSizeMake(0, 0)
     
-    var cellGrid: UICollectionView?
+    var cellGrid: UICollectionView!
+    var footerView: DynamicBottomBar = DynamicBottomBar(frame: CGRectZero)
     
     let imageManager: PHImageManager = PHImageManager()
     
@@ -36,15 +37,19 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
         layout.minimumLineSpacing = LINE_HEIGHT_IN_SUB_COLLECTION
         
         self.cellGrid = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
-        cellGrid!.frame = self.view.bounds
-        cellGrid!.registerClass(MPAssetGridViewCell.classForCoder(), forCellWithReuseIdentifier: "gcell")
-        cellGrid!.backgroundColor = UIColor.whiteColor()
-        cellGrid!.dataSource = self
-        cellGrid!.delegate = self
-        self.view.addSubview(cellGrid!)
+        cellGrid.frame = self.view.bounds
+        cellGrid.registerClass(MPAssetGridViewCell.classForCoder(), forCellWithReuseIdentifier: "gcell")
+        cellGrid.backgroundColor = UIColor.whiteColor()
+        cellGrid.dataSource = self
+        cellGrid.delegate = self
+        self.view.addSubview(cellGrid)
         
-        let doneBtn = UIBarButtonItem(title: self.config?.barBtnTitleDone, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapDoneButton"))
-        self.navigationItem.rightBarButtonItem = doneBtn
+//        let doneBtn = UIBarButtonItem(title: self.config?.barBtnTitleDone, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapDoneButton"))
+//        self.navigationItem.rightBarButtonItem = doneBtn
+        
+        let cancelBtn = UIBarButtonItem(title: self.config?.barBtnTitleCancel, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapCancelButton"))
+        self.navigationItem.rightBarButtonItem = cancelBtn
+        self.navigationItem.rightBarButtonItem?.enabled = true
         
         let scale = UIScreen.mainScreen().scale
         let ratio = PHOTO_DEFAULT_RATIO_H_2_W.IPHONE_6.rawValue
@@ -53,21 +58,32 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
     
     override func viewDidLoad() {
         // Add footer view if needed
-        if let footerView = self.config?.staticFooterView {
-            let footerHeight = footerView.frame.height
-            let bounds = UIScreen.mainScreen().bounds
-            cellGrid!.frame = CGRectMake(0, 0, bounds.width, bounds.height - footerHeight)
-            
-            let footerFrame = CGRectMake(0, bounds.height - footerHeight, bounds.width, footerHeight)
-            footerView.frame = footerFrame
-            self.view.addSubview(footerView)
-        }
+//        if let footerView = self.config?.staticFooterView {
+//            let footerHeight = footerView.frame.height
+//            let bounds = UIScreen.mainScreen().bounds
+//            cellGrid.frame = CGRectMake(0, 0, bounds.width, bounds.height - footerHeight)
+//            
+//            let footerFrame = CGRectMake(0, bounds.height - footerHeight, bounds.width, footerHeight)
+//            footerView.frame = footerFrame
+//            self.view.addSubview(footerView)
+//        }
         
-        self.toggleDoneAvailability()
+        self.footerView.frame = CGRectMake(0, self.view.bounds.height - 48, self.view.bounds.width, 48)
+        let footerHeight = footerView.frame.height
+        self.cellGrid.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height - footerHeight)
+        self.view.addSubview(footerView)
+        if let okBtnColor = self.config?.selectionEnabledColor {
+            self.footerView.setOkBtnHighlightColor(okBtnColor)
+        }
+        if let range = self.config?.selectionRange {
+            self.footerView.updateSelectionRange(range)
+        }
+        self.footerView.okBtn.addTarget(self, action: Selector("onTapDoneButton"), forControlEvents: UIControlEvents.TouchUpInside)
         
         if self.config!.startingPosition == .BOTTOM {
-            self.cellGrid!.scroll2Bottom(dataSourceCount: self.assetsFetchResults!.count, animated: false) // scroll to bottom
+            self.cellGrid.scroll2Bottom(dataSourceCount: self.assetsFetchResults!.count, animated: false) // scroll to bottom
         }
+        
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -102,15 +118,17 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
         } else {
             let asset = self.assetsFetchResults![indexPath.item] as! PHAsset
             cellChecked[indexPath.item] = !cellChecked[indexPath.item]
-            cellGrid!.reloadItemsAtIndexPaths([indexPath])
+            cellGrid.reloadItemsAtIndexPaths([indexPath])
             if MPCheckMarkStorage.sharedInstance.removeIfAlreadyChecked(cellIndex: indexPath.item, asset: asset) {
                 // already checked, remove it
             } else {
                 MPCheckMarkStorage.sharedInstance.addEntry(cellIndex: indexPath.item, asset: asset)
             }
+            
+            let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
+            self.footerView.updateSelectionCounter(counter)
         
             self.changeTitleWhenSelected()
-            self.toggleDoneAvailability()
         }
     }
     
@@ -118,6 +136,13 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
         self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
         if let delegate = self.delegate {
             delegate.pickedAssets(self, didFinishPickingAssets: MPCheckMarkStorage.sharedInstance.getCheckedAssets())
+        }
+    }
+    
+    func onTapCancelButton() {
+        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
+        if let delegate = self.delegate {
+            delegate.pickCancelled(self)
         }
     }
     
@@ -153,18 +178,4 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
         }
     }
     
-    private func toggleDoneAvailability() {
-        if let config = self.config {
-            if let selectionRange = config.selectionRange {
-                let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
-                let min = selectionRange.0
-                let max = selectionRange.1
-                if counter >= min && counter <= max {
-                    self.navigationItem.rightBarButtonItem!.enabled = true
-                } else {
-                    self.navigationItem.rightBarButtonItem!.enabled = false
-                }
-            }
-        }
-    }
 }

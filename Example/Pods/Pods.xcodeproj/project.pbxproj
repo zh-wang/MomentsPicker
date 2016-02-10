@@ -26,6 +26,7 @@
 		AE240BA770B6889D48A9C4A2EFE97D07 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF49F61B9C6DBA3743C9D56D37956883 /* Utils.swift */; };
 		C59C9DF108EC7ADA28B14F9C22ED94E6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E36762FF8E4A4E113EEC970F71E699C /* Foundation.framework */; };
 		C7CC79DC247DEA8B043936F8023B524B /* MPRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFDEBA0EE5F5699888F84782C0F3E57 /* MPRootViewController.swift */; };
+		C8D3BEC21C69845F006D4C35 /* DynamicBottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D3BEC11C69845F006D4C35 /* DynamicBottomBar.swift */; };
 		D1D9BE956E15140AE02559C90D6BFB0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E36762FF8E4A4E113EEC970F71E699C /* Foundation.framework */; };
 		D9671139461F17E600BE399ED873BA1D /* MomentsPicker-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 02DE14093AF50B0BCF16350E5011F27A /* MomentsPicker-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E318121096E6AB1A78488E08E8D23369 /* MPListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801E7FBAE52C504384AF2E11D4219B65 /* MPListViewController.swift */; };
@@ -95,6 +96,7 @@
 		B09DBE185814C91FD44027C027320D45 /* MPCheckMarkView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPCheckMarkView.swift; sourceTree = "<group>"; };
 		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BB62B48B5C13826AE2469AD232B343D0 /* Pods_MomentsPicker_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MomentsPicker_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8D3BEC11C69845F006D4C35 /* DynamicBottomBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicBottomBar.swift; sourceTree = "<group>"; };
 		CBFFEB17F3BA059A244746A95E88E33A /* MPCheckMarkStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPCheckMarkStorage.swift; sourceTree = "<group>"; };
 		D9707042DC2113B99521B99D0528AE5C /* MomentsPicker-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MomentsPicker-prefix.pch"; sourceTree = "<group>"; };
 		E045390EFB7F56839F771E84882A35AC /* Pods-MomentsPicker_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-MomentsPicker_Example-umbrella.h"; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				2DFDEBA0EE5F5699888F84782C0F3E57 /* MPRootViewController.swift */,
 				5B1ACD0F7B838EC382DB2FF893F14140 /* MPViewControllerDelegate.swift */,
 				FF49F61B9C6DBA3743C9D56D37956883 /* Utils.swift */,
+				C8D3BEC11C69845F006D4C35 /* DynamicBottomBar.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -466,6 +469,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8D3BEC21C69845F006D4C35 /* DynamicBottomBar.swift in Sources */,
 				2B1D94638CBECAD534791D8E064A8281 /* Constants.swift in Sources */,
 				E6EDCDFC2B36B0BD2A8AD1FFEDBEA2ED /* MomentsPicker-dummy.m in Sources */,
 				EE373D0A81972F43D6F369C2E2B017CD /* MPAssetGridViewCell.swift in Sources */,

@@ -43,6 +43,7 @@ class ViewController: UIViewController, MPViewControllerDelegate {
                 label.textAlignment = NSTextAlignment.Center
                 config.staticFooterView = label
                 config.startingContents = .Moments
+                config.selectionEnabledColor = UIColor.redColor()
                 self.presentViewController(MPRootViewController.newInstance(delegate: self, config: config), animated: true, completion: nil)
             }, notAllowBlock: {
                 // Not allowed. Please Enable Photo Access in settings.

@@ -37,6 +37,7 @@ public class MPConfig {
     public var categoryTitleSmartAlbums = "Smart Albums"
     public var categoryTitleUserAlbums = "User Albums"
     public var selectedCounterText = "%d selected"
+    public var selectionEnabledColor: UIColor = UIColor.cyanColor()
     
     public init() {
         onlyIncludeStaticImage = true
