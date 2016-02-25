@@ -94,6 +94,7 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
         self.navigationController?.navigationBar.hidden = false
         
         self.prepareData()
+        self.footerView.updateSelectionCounter()
         self.cellGrid.reloadData()
     }
     
@@ -138,13 +139,15 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
         self.pushDetailViewController(indexPath: indexPath)
     }
     
+    // MARK: - handlers
+    
     @objc private func handleTapOnCheckMark(sender: UITapGestureRecognizer) {
         if let view = (sender.view as? MPCheckMarkView) {
             self.updateCheckMark(indexPath: view.nsIndexPath)
+            
+            self.footerView.updateSelectionCounter()
         }
     }
-    
-    // MARK: - handlers
     
     @objc private func onTapDoneButton() {
         self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
@@ -196,6 +199,7 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
         detailVC.assetsFetchResults = self.assetsFetchResults
         detailVC.rowIndex = nil
         detailVC.startCellIndex = indexPath.item
+        detailVC.delegate = self.delegate
         self.navigationController?.pushViewController(detailVC, animated: true)
     }
     

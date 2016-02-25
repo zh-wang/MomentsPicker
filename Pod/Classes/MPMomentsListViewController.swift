@@ -77,6 +77,7 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         
         self.navigationController?.navigationBar.hidden = false
         
+        self.footerView.updateSelectionCounter()
         self.tableView.reloadData()
     }
     
@@ -178,7 +179,7 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         self.changeTitleWhenSelected()
         
         let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
-        self.footerView.updateSelectionCounter(counter)
+        self.footerView.updateSelectionCounter()
         
         if let delegate = self.delegate {
             delegate.didSelectionCounterChanged(self, counter: counter)
@@ -223,6 +224,7 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         detailVC.rowIndex = row
         detailVC.startCellIndex = cellIndex
         detailVC.assetsFetchResults = assets
+        detailVC.delegate = self.delegate
         self.navigationController?.pushViewController(detailVC, animated: true)
     }
     

@@ -36,6 +36,11 @@ class DynamicBottomBar: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func updateSelectionCounter() {
+        let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
+        self.updateSelectionCounter(counter)
+    }
+    
     func updateSelectionCounter(counter: Int) {
         self.roundLabel.text = "\(counter)"
         if let range = self.selectionRange {

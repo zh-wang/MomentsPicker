@@ -15,9 +15,9 @@ class MPDetailViewController: UIViewController,
     UICollectionViewDataSource {
     
     var config: MPConfig?
-    var imageFetchSize: CGSize = CGSizeZero
+    var delegate: MPViewControllerDelegate?
     
-    var categoryName: String = ""
+    var imageFetchSize: CGSize = CGSizeZero
     
     var assetsFetchResults: PHFetchResult?
     var rowIndex: Int? = 0 // only useful if parent vc is not memory list
@@ -39,7 +39,7 @@ class MPDetailViewController: UIViewController,
         
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.itemSize = CGSizeMake(self.view.bounds.width, self.view.bounds.height)
+        layout.itemSize = CGSizeMake(self.view.bounds.width, self.view.bounds.height - 48)
         layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
@@ -69,7 +69,7 @@ class MPDetailViewController: UIViewController,
         self.checkMark = MPCheckMarkView(frame: CGRectMake(self.view.bounds.width - 48, 4, 48, 48))
         self.view.addSubview(self.checkMark)
         self.checkMark.insets = UIEdgeInsetsMake(8, 4, 4, 8)
-        let recog = UITapGestureRecognizer(target: self, action: Selector("handleTapOnCheckMark:"))
+        let recog = UITapGestureRecognizer(target: self, action: Selector("onTapCheckMark:"))
         self.checkMark.addGestureRecognizer(recog)
         
         self.indicator.frame = CGRectMake(0, 4, self.view.bounds.width, 48)
@@ -81,6 +81,24 @@ class MPDetailViewController: UIViewController,
         
         self.updateCheckMark()
         
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.footerView.frame = CGRectMake(0, self.view.bounds.height - 48, self.view.bounds.width, 48)
+        let footerHeight = footerView.frame.height
+        self.collectionView.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height - footerHeight)
+        self.view.addSubview(footerView)
+        if let okBtnColor = self.config?.selectionEnabledColor {
+            self.footerView.setOkBtnHighlightColor(okBtnColor)
+        }
+        if let range = self.config?.selectionRange {
+            self.footerView.updateSelectionRange(range)
+        }
+        self.footerView.okBtn.addTarget(self, action: Selector("onTapDoneButton"), forControlEvents: UIControlEvents.TouchUpInside)
+        
+        self.footerView.updateSelectionCounter()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -149,31 +167,45 @@ class MPDetailViewController: UIViewController,
     
     // MARK: - handlers
     
+    @objc private func onTapDoneButton() {
+        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
+        if let delegate = self.delegate {
+            delegate.pickedAssets(self, didFinishPickingAssets: MPCheckMarkStorage.sharedInstance.getCheckedAssets())
+        }
+    }
+    
     @objc private func onTapBackBtn(button: UIButton) {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    @objc private func handleTapOnCheckMark(sender: UITapGestureRecognizer) {
+    @objc private func onTapCheckMark(sender: UITapGestureRecognizer) {
         if self.getCurrentCellIndex() < 0 { return }
         
         let cellIndex = self.getCurrentCellIndex()
-        let asset = self.assetsFetchResults![cellIndex] as! PHAsset
-            
-        if self.rowIndex != nil {
-            if MPCheckMarkStorage.sharedInstance.removeIfAlreadyChecked(row: self.rowIndex!, cellIndex: cellIndex, asset: asset) {
-                // already checked, remove it
-            } else {
-                MPCheckMarkStorage.sharedInstance.addEntry(row: self.rowIndex!, cellIndex: cellIndex, asset: asset)
-            }
-        } else {
-            if MPCheckMarkStorage.sharedInstance.removeIfAlreadyChecked(cellIndex: cellIndex, asset: asset) {
-                // already checked, remove it
-            } else {
-                MPCheckMarkStorage.sharedInstance.addEntry(cellIndex: cellIndex, asset: asset)
-            }
-        }
         
-        self.updateCheckMark()
+        if self.isSelectedTooMany() && self.isSelectingNewItem(cellIndex) {
+            // Cannot select more, but we can undo selecting for selected items
+        } else {
+        
+            let asset = self.assetsFetchResults![cellIndex] as! PHAsset
+                
+            if self.rowIndex != nil {
+                if MPCheckMarkStorage.sharedInstance.removeIfAlreadyChecked(row: self.rowIndex!, cellIndex: cellIndex, asset: asset) {
+                    // already checked, remove it
+                } else {
+                    MPCheckMarkStorage.sharedInstance.addEntry(row: self.rowIndex!, cellIndex: cellIndex, asset: asset)
+                }
+            } else {
+                if MPCheckMarkStorage.sharedInstance.removeIfAlreadyChecked(cellIndex: cellIndex, asset: asset) {
+                    // already checked, remove it
+                } else {
+                    MPCheckMarkStorage.sharedInstance.addEntry(cellIndex: cellIndex, asset: asset)
+                }
+            }
+            
+            self.updateCheckMark()
+            self.footerView.updateSelectionCounter()
+        }
     }
     
     // MARK: - private funcs
@@ -201,5 +233,19 @@ class MPDetailViewController: UIViewController,
     private func buildIndicatorText(currentIndex currentIndex: Int) -> String {
         let total = self.assetsFetchResults?.count ?? 0
         return "\(currentIndex) / \(total)"
+    }
+    
+    private func isSelectingNewItem(cellIndex: Int) -> Bool {
+        return !MPCheckMarkStorage.sharedInstance.isEntryAlreadySelected(cellIndex: cellIndex)
+    }
+    
+    private func isSelectedTooMany() -> Bool {
+        if let config = self.config {
+            if let selectionRange = config.selectionRange {
+                let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
+                return counter >= selectionRange.1 ? true : false
+            }
+        }
+        return true
     }
 }
