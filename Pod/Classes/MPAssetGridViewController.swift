@@ -173,6 +173,8 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
         }
     }
     
+    // MARK: - handlers
+    
     @objc private func onTapDoneButton() {
         self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
         if let delegate = self.delegate {
@@ -226,6 +228,35 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
         detailVC.rowIndex = nil
         detailVC.startCellIndex = indexPath.item
         detailVC.delegate = self.delegate
+        self.navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    // MARK: - private funcs
+    
+    private func updateCheckMark(indexPath indexPath: NSIndexPath) {
+        if self.isSelectedTooMany() && self.isSelectingNewItem(indexPath.item) {
+            // Cannot select more, but we can undo selecting for selected items
+        } else {
+            let asset = self.assetsFetchResults![indexPath.item] as! PHAsset
+            cellChecked[indexPath.item] = !cellChecked[indexPath.item]
+            cellGrid.reloadItemsAtIndexPaths([indexPath])
+            if MPCheckMarkStorage.sharedInstance.removeIfAlreadyChecked(cellIndex: indexPath.item, asset: asset) {
+                // already checked, remove it
+            } else {
+                MPCheckMarkStorage.sharedInstance.addEntry(cellIndex: indexPath.item, asset: asset)
+            }
+            
+            self.changeTitleWhenSelected()
+            self.toggleDoneAvailability()
+        }
+    }
+    
+    private func pushDetailViewController(indexPath indexPath: NSIndexPath) {
+        let detailVC = MPDetailViewController()
+        detailVC.config = self.config
+        detailVC.assetsFetchResults = self.assetsFetchResults
+        detailVC.rowIndex = nil
+        detailVC.startCellIndex = indexPath.item
         self.navigationController?.pushViewController(detailVC, animated: true)
     }
     
