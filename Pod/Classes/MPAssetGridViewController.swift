@@ -16,7 +16,7 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
     var delegate: MPViewControllerDelegate?
     
     var assetsFetchResults: PHFetchResult?
-    var assetCollection: PHAssetCollection?
+//    var assetCollection: PHAssetCollection?
     var cellChecked: [Bool] = []
     
     var assetGridThumbnailSize: CGSize = CGSizeMake(0, 0)
@@ -57,6 +57,8 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         // Add footer view if needed
 //        if let footerView = self.config?.staticFooterView {
 //            let footerHeight = footerView.frame.height
@@ -80,11 +82,22 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
         }
         self.footerView.okBtn.addTarget(self, action: Selector("onTapDoneButton"), forControlEvents: UIControlEvents.TouchUpInside)
         
-        if self.config!.startingPosition == .BOTTOM {
+        if self.config?.startingPosition == .BOTTOM {
             self.cellGrid.scroll2Bottom(dataSourceCount: self.assetsFetchResults!.count, animated: false) // scroll to bottom
         }
         
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.hidden = false
+        
+        self.prepareData()
+        self.cellGrid.reloadData()
+    }
+    
+    // MARK: - delegates
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.assetsFetchResults?.count ?? 0
@@ -93,6 +106,15 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("gcell", forIndexPath: indexPath) as! MPAssetGridViewCell
+        
+        if let recogs = cell.gestureRecognizers {
+            for _recog in recogs {
+                cell.removeGestureRecognizer(_recog)
+            }
+        }
+        let recog = UITapGestureRecognizer(target: self, action: Selector("handleTapOnCheckMark:"))
+        cell.checkMark.addGestureRecognizer(recog)
+        cell.checkMark.nsIndexPath = indexPath
         
         let asset = self.assetsFetchResults![indexPath.item] as! PHAsset
         let options = PHImageRequestOptions()
@@ -113,6 +135,44 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        self.pushDetailViewController(indexPath: indexPath)
+    }
+    
+    @objc private func handleTapOnCheckMark(sender: UITapGestureRecognizer) {
+        if let view = (sender.view as? MPCheckMarkView) {
+            self.updateCheckMark(indexPath: view.nsIndexPath)
+        }
+    }
+    
+    // MARK: - handlers
+    
+    @objc private func onTapDoneButton() {
+        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
+        if let delegate = self.delegate {
+            delegate.pickedAssets(self, didFinishPickingAssets: MPCheckMarkStorage.sharedInstance.getCheckedAssets())
+        }
+    }
+    
+    @objc private func onTapCancelButton() {
+        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
+        if let delegate = self.delegate {
+            delegate.pickCancelled(self)
+        }
+    }
+
+    // MARK: - funcs
+    
+    func prepareData() {
+        self.cellChecked = [Bool](count: self.assetsFetchResults!.count, repeatedValue: false)
+        let indexList = MPCheckMarkStorage.sharedInstance.getCheckedCellIndexList()
+        indexList.each { checkedCellIndex in
+            self.cellChecked[checkedCellIndex] = true
+        }
+    }
+    
+    // MARK: - private funcs
+    
+    private func updateCheckMark(indexPath indexPath: NSIndexPath) {
         if self.isSelectedTooMany() && self.isSelectingNewItem(indexPath.item) {
             // Cannot select more, but we can undo selecting for selected items
         } else {
@@ -125,33 +185,18 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
                 MPCheckMarkStorage.sharedInstance.addEntry(cellIndex: indexPath.item, asset: asset)
             }
             
-            let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
-            self.footerView.updateSelectionCounter(counter)
-        
             self.changeTitleWhenSelected()
+            self.toggleDoneAvailability()
         }
     }
     
-    func onTapDoneButton() {
-        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
-        if let delegate = self.delegate {
-            delegate.pickedAssets(self, didFinishPickingAssets: MPCheckMarkStorage.sharedInstance.getCheckedAssets())
-        }
-    }
-    
-    func onTapCancelButton() {
-        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
-        if let delegate = self.delegate {
-            delegate.pickCancelled(self)
-        }
-    }
-    
-    func prepareData() {
-        self.cellChecked = [Bool](count: self.assetsFetchResults!.count, repeatedValue: false)
-        let indexList = MPCheckMarkStorage.sharedInstance.getCheckedCellIndexList()
-        indexList.each { checkedCellIndex in
-            self.cellChecked[checkedCellIndex] = true
-        }
+    private func pushDetailViewController(indexPath indexPath: NSIndexPath) {
+        let detailVC = MPDetailViewController()
+        detailVC.config = self.config
+        detailVC.assetsFetchResults = self.assetsFetchResults
+        detailVC.rowIndex = nil
+        detailVC.startCellIndex = indexPath.item
+        self.navigationController?.pushViewController(detailVC, animated: true)
     }
     
     private func isSelectingNewItem(cellIndex: Int) -> Bool {
@@ -174,6 +219,21 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
                 let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
                 let selectedCounterText = String(format: config.selectedCounterText, arguments: [counter])
                 self.navigationItem.title = selectedCounterText
+            }
+        }
+    }
+    
+    private func toggleDoneAvailability() {
+        if let config = self.config {
+            if let selectionRange = config.selectionRange {
+                let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
+                let min = selectionRange.0
+                let max = selectionRange.1
+                if counter >= min && counter <= max {
+                    self.navigationItem.rightBarButtonItem!.enabled = true
+                } else {
+                    self.navigationItem.rightBarButtonItem!.enabled = false
+                }
             }
         }
     }

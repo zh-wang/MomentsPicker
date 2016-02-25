@@ -26,6 +26,9 @@
 		AE240BA770B6889D48A9C4A2EFE97D07 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF49F61B9C6DBA3743C9D56D37956883 /* Utils.swift */; };
 		C59C9DF108EC7ADA28B14F9C22ED94E6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E36762FF8E4A4E113EEC970F71E699C /* Foundation.framework */; };
 		C7CC79DC247DEA8B043936F8023B524B /* MPRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFDEBA0EE5F5699888F84782C0F3E57 /* MPRootViewController.swift */; };
+		C885EE3B1C7C597D00DB438C /* MPDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C885EE3A1C7C597D00DB438C /* MPDetailViewController.swift */; };
+		C885EE3D1C7D7E8B00DB438C /* MPDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C885EE3C1C7D7E8B00DB438C /* MPDetailViewCell.swift */; };
+		C8992E261C7DAB3700419684 /* FALBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8992E251C7DAB3700419684 /* FALBackButton.swift */; };
 		C8D3BEC21C69845F006D4C35 /* DynamicBottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D3BEC11C69845F006D4C35 /* DynamicBottomBar.swift */; };
 		D1D9BE956E15140AE02559C90D6BFB0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E36762FF8E4A4E113EEC970F71E699C /* Foundation.framework */; };
 		D9671139461F17E600BE399ED873BA1D /* MomentsPicker-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 02DE14093AF50B0BCF16350E5011F27A /* MomentsPicker-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -96,6 +99,9 @@
 		B09DBE185814C91FD44027C027320D45 /* MPCheckMarkView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPCheckMarkView.swift; sourceTree = "<group>"; };
 		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BB62B48B5C13826AE2469AD232B343D0 /* Pods_MomentsPicker_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MomentsPicker_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C885EE3A1C7C597D00DB438C /* MPDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPDetailViewController.swift; sourceTree = "<group>"; };
+		C885EE3C1C7D7E8B00DB438C /* MPDetailViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPDetailViewCell.swift; sourceTree = "<group>"; };
+		C8992E251C7DAB3700419684 /* FALBackButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FALBackButton.swift; sourceTree = "<group>"; };
 		C8D3BEC11C69845F006D4C35 /* DynamicBottomBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicBottomBar.swift; sourceTree = "<group>"; };
 		CBFFEB17F3BA059A244746A95E88E33A /* MPCheckMarkStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPCheckMarkStorage.swift; sourceTree = "<group>"; };
 		D9707042DC2113B99521B99D0528AE5C /* MomentsPicker-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MomentsPicker-prefix.pch"; sourceTree = "<group>"; };
@@ -257,20 +263,23 @@
 			isa = PBXGroup;
 			children = (
 				704587E04ABA0270A569A1FAB95DF1B7 /* Constants.swift */,
-				F72452483F5FB4B0FB636CF1DE97959B /* MPAssetGridViewCell.swift */,
-				9877639B12889C4CE2B4213DD3203EF6 /* MPAssetGridViewController.swift */,
-				CBFFEB17F3BA059A244746A95E88E33A /* MPCheckMarkStorage.swift */,
-				B09DBE185814C91FD44027C027320D45 /* MPCheckMarkView.swift */,
 				F0E3555D67835C96E7C27428867C6086 /* MPConfig.swift */,
+				FF49F61B9C6DBA3743C9D56D37956883 /* Utils.swift */,
+				C8992E251C7DAB3700419684 /* FALBackButton.swift */,
+				C8D3BEC11C69845F006D4C35 /* DynamicBottomBar.swift */,
+				B09DBE185814C91FD44027C027320D45 /* MPCheckMarkView.swift */,
+				CBFFEB17F3BA059A244746A95E88E33A /* MPCheckMarkStorage.swift */,
 				12DE207C76777CA54D379A6B29E40D32 /* MPListViewCell.swift */,
 				801E7FBAE52C504384AF2E11D4219B65 /* MPListViewController.swift */,
+				F72452483F5FB4B0FB636CF1DE97959B /* MPAssetGridViewCell.swift */,
+				9877639B12889C4CE2B4213DD3203EF6 /* MPAssetGridViewController.swift */,
 				5B631316679EC7D733771CE22753357F /* MPMomentsListViewCell.swift */,
-				E3E46016A58C6633EC1721AB62E1E6DA /* MPMomentsListViewCellDelegate.swift */,
 				67C3B2AE1FE7BD4A7AB7DE49B22F024C /* MPMomentsListViewController.swift */,
 				2DFDEBA0EE5F5699888F84782C0F3E57 /* MPRootViewController.swift */,
+				C885EE3C1C7D7E8B00DB438C /* MPDetailViewCell.swift */,
+				C885EE3A1C7C597D00DB438C /* MPDetailViewController.swift */,
 				5B1ACD0F7B838EC382DB2FF893F14140 /* MPViewControllerDelegate.swift */,
-				FF49F61B9C6DBA3743C9D56D37956883 /* Utils.swift */,
-				C8D3BEC11C69845F006D4C35 /* DynamicBottomBar.swift */,
+				E3E46016A58C6633EC1721AB62E1E6DA /* MPMomentsListViewCellDelegate.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -474,11 +483,14 @@
 				E6EDCDFC2B36B0BD2A8AD1FFEDBEA2ED /* MomentsPicker-dummy.m in Sources */,
 				EE373D0A81972F43D6F369C2E2B017CD /* MPAssetGridViewCell.swift in Sources */,
 				2A71A877E22DBE973510715D7957A17B /* MPAssetGridViewController.swift in Sources */,
+				C8992E261C7DAB3700419684 /* FALBackButton.swift in Sources */,
 				A2A91EC074FE6670AD058C6EC1C3EE1D /* MPCheckMarkStorage.swift in Sources */,
 				29FD2313022A469DE7B436EF4E3C38E4 /* MPCheckMarkView.swift in Sources */,
+				C885EE3B1C7C597D00DB438C /* MPDetailViewController.swift in Sources */,
 				22C93D2B7AB6D64C72DD1B8AFBFD18E2 /* MPConfig.swift in Sources */,
 				4BCAF177F6028EB631CBE3F73E111039 /* MPListViewCell.swift in Sources */,
 				E318121096E6AB1A78488E08E8D23369 /* MPListViewController.swift in Sources */,
+				C885EE3D1C7D7E8B00DB438C /* MPDetailViewCell.swift in Sources */,
 				A9217A138867DC4B1413EAD2B5C51A96 /* MPMomentsListViewCell.swift in Sources */,
 				2AFFF1A39AC0473E299B46E996EE5A9E /* MPMomentsListViewCellDelegate.swift in Sources */,
 				6F9B122D9B6EDF87940E472A7C3981BE /* MPMomentsListViewController.swift in Sources */,

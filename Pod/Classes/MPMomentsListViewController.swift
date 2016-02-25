@@ -20,26 +20,6 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
     var tableView: UITableView = UITableView(frame: CGRectZero, style: UITableViewStyle.Plain)
     var footerView: DynamicBottomBar = DynamicBottomBar(frame: CGRectZero)
     
-    func prepareData(asstesFetchResults: PHFetchResult) {
-        self.assetsFetchResults = asstesFetchResults
-        
-        self.assetsFetchResultsOnlyImage = []
-        
-        for i in 0..<assetsFetchResults!.count {
-            let assetCollection = self.assetsFetchResults![i]
-            
-            /* fetch image only */
-            let options = PHFetchOptions()
-            options.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.Image.rawValue)
-            
-            let fetchResult = PHAsset.fetchAssetsInAssetCollection(assetCollection as! PHAssetCollection, options: options)
-            
-            if fetchResult.count > 0 {
-                assetsFetchResultsOnlyImage.append(fetchResult)
-            }
-        }
-    }
-
     override func loadView() {
         super.loadView()
         
@@ -60,6 +40,7 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         
         // Add footer view if needed
 //        if let footerView = self.config?.staticFooterView {
@@ -79,19 +60,27 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         if let okBtnColor = self.config?.selectionEnabledColor {
             self.footerView.setOkBtnHighlightColor(okBtnColor)
         }
+
+        // TODO
         if let range = self.config?.selectionRange {
             self.footerView.updateSelectionRange(range)
         }
         self.footerView.okBtn.addTarget(self, action: Selector("onTapDoneButton"), forControlEvents: UIControlEvents.TouchUpInside)
+        
+        if self.config?.startingPosition == .BOTTOM {
+            self.tableView.scroll2Bottom(dataSource: self.assetsFetchResultsOnlyImage, animated: false) // scroll to bottom
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if self.config!.startingPosition == .BOTTOM {
-            self.tableView.scroll2Bottom(dataSource: self.assetsFetchResultsOnlyImage, animated: false) // scroll to bottom
-        }
+        self.navigationController?.navigationBar.hidden = false
+        
+        self.tableView.reloadData()
     }
+    
+    // MARK: - delegates
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let numberOfSubCollectionRows = (assetsFetchResultsOnlyImage[indexPath.row].count + NUMBER_OF_COLUMN_IN_SUB_COLLECTION - 1) / NUMBER_OF_COLUMN_IN_SUB_COLLECTION
@@ -169,13 +158,6 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         return cell
     }
     
-    func onTapDoneButton() {
-        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
-        if let delegate = self.delegate {
-            delegate.pickedAssets(self, didFinishPickingAssets: MPCheckMarkStorage.sharedInstance.getCheckedAssets())
-        }
-    }
-    
     func onTapCancelButton() {
         self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
         if let delegate = self.delegate {
@@ -189,6 +171,10 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func didSelectImageInCell(row row: Int, cellIndex: Int) {
+        self.pushDetailViewController(cellIndex: cellIndex, row: row)
+    }
+    
+    func didTapCheckMark(row row: Int, cellIndex: Int) {
         self.changeTitleWhenSelected()
         
         let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
@@ -197,6 +183,47 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         if let delegate = self.delegate {
             delegate.didSelectionCounterChanged(self, counter: counter)
         }
+    }
+    
+    // MARK: - funcs
+    
+    func prepareData(asstesFetchResults: PHFetchResult) {
+        self.assetsFetchResults = asstesFetchResults
+        
+        self.assetsFetchResultsOnlyImage = []
+        
+        for i in 0..<assetsFetchResults!.count {
+            let assetCollection = self.assetsFetchResults![i]
+            
+            /* fetch image only */
+            let options = PHFetchOptions()
+            options.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.Image.rawValue)
+            
+            let fetchResult = PHAsset.fetchAssetsInAssetCollection(assetCollection as! PHAssetCollection, options: options)
+            
+            if fetchResult.count > 0 {
+                assetsFetchResultsOnlyImage.append(fetchResult)
+            }
+        }
+    }
+    
+    // MARK: - private funcs
+    
+    @objc private func onTapDoneButton() {
+        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
+        if let delegate = self.delegate {
+            delegate.pickedAssets(self, didFinishPickingAssets: MPCheckMarkStorage.sharedInstance.getCheckedAssets())
+        }
+    }
+    
+    private func pushDetailViewController(cellIndex cellIndex: Int, row: Int) {
+        let detailVC = MPDetailViewController()
+        detailVC.config = self.config
+        let assets = self.assetsFetchResultsOnlyImage[row]
+        detailVC.rowIndex = row
+        detailVC.startCellIndex = cellIndex
+        detailVC.assetsFetchResults = assets
+        self.navigationController?.pushViewController(detailVC, animated: true)
     }
     
     private func isSelectingNewItem(row row: Int, cellIndex: Int) -> Bool {

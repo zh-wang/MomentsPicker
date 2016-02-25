@@ -15,7 +15,7 @@ class MPAssetGridViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        if self.imageView.isDescendantOfView(self) {
+        if self.imageView.isDescendantOfView(self.contentView) {
             // Do nothing
         } else {
             let imageViewFrame = CGRectMake(0, 0, frame.width, frame.height)
@@ -24,10 +24,11 @@ class MPAssetGridViewCell: UICollectionViewCell {
             self.imageView.clipsToBounds = true
             self.contentView.addSubview(imageView)
             
-            let checkMarkFrame = CGRectMake(4, 4, frame.width / 4, frame.width / 4)
+            let checkMarkFrame = CGRectMake(0, 0, frame.width / 2, frame.width / 2)
             self.checkMark.frame = checkMarkFrame
+            self.checkMark.insets = UIEdgeInsetsMake(0, 0, frame.width / 4, frame.width / 4)
             self.checkMark.checked = false
-            self.checkMark.checkMarkStyle = MPCheckMarkStyle.OpenCircle
+            self.checkMark.checkMarkStyle = MPCheckMarkStyle.GrayedOut
             self.contentView.addSubview(checkMark)
         }
     }

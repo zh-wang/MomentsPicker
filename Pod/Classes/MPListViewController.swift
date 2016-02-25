@@ -134,7 +134,7 @@ class MPListViewController: UITableViewController {
                 let assetCollection = collection as! PHAssetCollection
                 let assetFetchResult = PHAsset.fetchAssetsInAssetCollection(assetCollection, options: nil)
                 assetGridViewController.navigationItem.title = collection.localizedTitle
-                assetGridViewController.assetCollection = assetCollection
+//                assetGridViewController.assetCollection = assetCollection
                 assetGridViewController.assetsFetchResults = assetFetchResult
             }
             
@@ -147,7 +147,7 @@ class MPListViewController: UITableViewController {
         
     }
     
-    // MARK: - touch event handler
+    // MARK: - handlers
     func onTapCancelButton() {
         self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
         if let delegate = self.delegate {
@@ -155,7 +155,7 @@ class MPListViewController: UITableViewController {
         }
     }
     
-    // MARK: - private methods
+    // MARK: - funcs
     func jump2MomentsList(fetchResult: PHFetchResult, animated: Bool) {
         let momentsListViewController = MPMomentsListViewController()
         momentsListViewController.delegate = self.delegate

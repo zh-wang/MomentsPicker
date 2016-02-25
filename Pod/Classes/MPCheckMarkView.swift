@@ -15,13 +15,24 @@ enum MPCheckMarkStyle: Int {
 
 class MPCheckMarkView: UIView {
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.backgroundColor = UIColor.clearColor()
+    var nsIndexPath: NSIndexPath = NSIndexPath(forItem: -1, inSection: -1)
+    
+    var insets: UIEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0) {
+        didSet {
+            self.setNeedsDisplay()
+        }
     }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    
+    var circleLineWidth: CGFloat = 2 {
+        didSet {
+            self.setNeedsDisplay()
+        }
+    }
+    
+    var checkMarkLineWidth: CGFloat = 2 {
+        didSet {
+            self.setNeedsDisplay()
+        }
     }
     
     var checked = true {
@@ -29,10 +40,20 @@ class MPCheckMarkView: UIView {
             self.setNeedsDisplay()
         }
     }
-    var checkMarkStyle: MPCheckMarkStyle = .OpenCircle {
+    
+    var checkMarkStyle: MPCheckMarkStyle = .GrayedOut {
         didSet {
             self.setNeedsDisplay()
         }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = UIColor.clearColor()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func toggle() {
@@ -73,6 +94,8 @@ class MPCheckMarkView: UIView {
 
         // Frames
         let frame = self.bounds
+            .intersect(self.bounds.offsetBy(dx: -self.insets.right, dy: -self.insets.bottom))
+            .intersect(self.bounds.offsetBy(dx: self.insets.left, dy: self.insets.top))
 
         // Subframes
         let group = CGRectMake(CGRectGetMinX(frame) + 3, CGRectGetMinY(frame) + 3, CGRectGetWidth(frame) - 6, CGRectGetHeight(frame) - 6)
@@ -88,7 +111,7 @@ class MPCheckMarkView: UIView {
         CGContextRestoreGState(context)
 
         UIColor.whiteColor().setStroke()
-        checkedOvalPath.lineWidth = 1
+        checkedOvalPath.lineWidth = self.circleLineWidth
         checkedOvalPath.stroke()
         
         // Bezier Drawing
@@ -99,7 +122,7 @@ class MPCheckMarkView: UIView {
         bezierPath.lineCapStyle = CGLineCap.Square
 
         UIColor.whiteColor().setStroke()
-        bezierPath.lineWidth = 1.3
+        bezierPath.lineWidth = self.checkMarkLineWidth
         bezierPath.stroke()
         
     }
@@ -118,6 +141,8 @@ class MPCheckMarkView: UIView {
         
         // Frames
         let frame = self.bounds
+            .intersect(self.bounds.offsetBy(dx: -self.insets.right, dy: -self.insets.bottom))
+            .intersect(self.bounds.offsetBy(dx: self.insets.left, dy: self.insets.top))
         
         // Subframes
         let group = CGRectMake(CGRectGetMinX(frame) + 3, CGRectGetMinY(frame) + 3, CGRectGetWidth(frame) - 6, CGRectGetHeight(frame) - 6)
@@ -134,7 +159,7 @@ class MPCheckMarkView: UIView {
         CGContextRestoreGState(context)
             
         UIColor.whiteColor().setStroke()
-        uncheckedOvalPath.lineWidth = 1
+        uncheckedOvalPath.lineWidth = self.circleLineWidth
         uncheckedOvalPath.stroke()
         
         // Bezier Drawing
@@ -145,7 +170,7 @@ class MPCheckMarkView: UIView {
         bezierPath.lineCapStyle = CGLineCap.Square
         
         UIColor.whiteColor().setStroke()
-        bezierPath.lineWidth = 1.3
+        bezierPath.lineWidth = self.checkMarkLineWidth
         bezierPath.stroke()
     }
     
@@ -163,6 +188,8 @@ class MPCheckMarkView: UIView {
         
         // Frames
         let frame = self.bounds
+            .intersect(self.bounds.offsetBy(dx: -self.insets.right, dy: -self.insets.bottom))
+            .intersect(self.bounds.offsetBy(dx: self.insets.left, dy: self.insets.top))
         
         // Subframes
         let group = CGRectMake(CGRectGetMinX(frame) + 3, CGRectGetMinY(frame) + 3, CGRectGetWidth(frame) - 6, CGRectGetHeight(frame) - 6)
@@ -176,7 +203,7 @@ class MPCheckMarkView: UIView {
         CGContextSaveGState(context)
         CGContextSetShadowWithColor(context, shadowOffset, shadowBlurRadius, shadow.CGColor)
         UIColor.whiteColor().setStroke()
-        emptyOvalPath.lineWidth = 1
+        emptyOvalPath.lineWidth = self.circleLineWidth
         emptyOvalPath.stroke()
         CGContextRestoreGState(context)
     }

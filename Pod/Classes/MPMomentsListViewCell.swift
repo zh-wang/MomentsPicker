@@ -29,8 +29,6 @@ class MPMomentsListViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
     let titleFont = UIFont.systemFontOfSize(16)
     let subtitleFont = UIFont.systemFontOfSize(12)
     
-    // MARK: - override
-    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         title.font = titleFont
@@ -95,6 +93,8 @@ class MPMomentsListViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
         self.cellGrid!.frame = CGRectMake(0, CGFloat(MOMENTS_LIST_CELL_TITLE_AREA_HEIGHT), self.bounds.width, self.bounds.height - CGFloat(MOMENTS_LIST_CELL_TITLE_AREA_HEIGHT))
     }
     
+    // MARK: - delegates
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.fetchResult?.count ?? 0
     }
@@ -102,6 +102,15 @@ class MPMomentsListViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("sgcell", forIndexPath: indexPath) as! MPAssetGridViewCell
+        
+        if let recogs = cell.gestureRecognizers {
+            for _recog in recogs {
+                cell.removeGestureRecognizer(_recog)
+            }
+        }
+        let recog = UITapGestureRecognizer(target: self, action: Selector("handleTapOnCheckMark:"))
+        cell.checkMark.addGestureRecognizer(recog)
+        cell.checkMark.nsIndexPath = indexPath
         
         if let phasset = self.ensureFetchedAssets(indexPath) {
             let options = PHImageRequestOptions()
@@ -121,12 +130,19 @@ class MPMomentsListViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if let cellDelegate = self.cellDelegate {
-            self.handleSelectionAtIndexPath(indexPath, cellDelegate: cellDelegate)
+        self.handleSelectionAtIndexPath(indexPath)
+    }
+    
+    // MARK: - handlers
+    
+    @objc private func handleTapOnCheckMark(sender: UITapGestureRecognizer) {
+        if let view = (sender.view as? MPCheckMarkView) {
+            self.updateCheckMark(indexPath: view.nsIndexPath)
+            cellDelegate?.didTapCheckMark(row: self.rowInMomeryList, cellIndex: view.nsIndexPath.item)
         }
     }
     
-    // MARK: - method
+    // MARK: - funcs
     
     func prepareData(fetchResult: PHFetchResult, row: Int) {
         self.fetchResult = fetchResult
@@ -139,27 +155,32 @@ class MPMomentsListViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
         }
     }
     
-    func ensureFetchedAssets(indexPath: NSIndexPath) -> PHAsset? {
+    // MARK: - private funcs
+    
+    private func updateCheckMark(indexPath indexPath: NSIndexPath) {
+        if let cellDelegate = self.cellDelegate {
+            if !cellDelegate.isSelectionEnable(row: self.rowInMomeryList, cellIndex: indexPath.item) {
+                return
+            }
+            if let phasset = self.ensureFetchedAssets(indexPath) {
+                cellChecked[indexPath.item] = !cellChecked[indexPath.item]
+                cellGrid!.reloadItemsAtIndexPaths([indexPath])
+                if MPCheckMarkStorage.sharedInstance.removeIfAlreadyChecked(row: self.rowInMomeryList, cellIndex: indexPath.item, asset: phasset) {
+                    // already checked, remove it
+                } else {
+                    MPCheckMarkStorage.sharedInstance.addEntry(row: self.rowInMomeryList, cellIndex: indexPath.item, asset: phasset)
+                }
+            }
+        }
+    }
+    
+    private func ensureFetchedAssets(indexPath: NSIndexPath) -> PHAsset? {
         let maybePhasset = self.fetchResult?[indexPath.item] as? PHAsset
         return maybePhasset
     }
     
-    func handleSelectionAtIndexPath(indexPath: NSIndexPath, cellDelegate: MPMomentsListViewCellDelegate) {
-        
-        if !cellDelegate.isSelectionEnable(row: self.rowInMomeryList, cellIndex: indexPath.item) {
-            return
-        }
-        
-        if let phasset = self.ensureFetchedAssets(indexPath) {
-            cellChecked[indexPath.item] = !cellChecked[indexPath.item]
-            cellGrid!.reloadItemsAtIndexPaths([indexPath])
-            if MPCheckMarkStorage.sharedInstance.removeIfAlreadyChecked(row: self.rowInMomeryList, cellIndex: indexPath.item, asset: phasset) {
-                // already checked, remove it
-            } else {
-                MPCheckMarkStorage.sharedInstance.addEntry(row: self.rowInMomeryList, cellIndex: indexPath.item, asset: phasset)
-            }
-            cellDelegate.didSelectImageInCell(row: self.rowInMomeryList, cellIndex: indexPath.item)
-        }
+    private func handleSelectionAtIndexPath(indexPath: NSIndexPath) {
+        self.cellDelegate?.didSelectImageInCell(row: self.rowInMomeryList, cellIndex: indexPath.item)
     }
     
 }

@@ -13,6 +13,10 @@ class MPCheckMarkStorage {
     
     static let sharedInstance = MPCheckMarkStorage()
     
+    /*
+        Row Index, Cell Index, Asset
+        if (Row Index) is not used, set to 0
+    */
     private var checkedEntry: [(Int, Int, PHAsset)] = []
     
     func clear() {
@@ -24,7 +28,7 @@ class MPCheckMarkStorage {
     }
     
     func addEntry(cellIndex cellIndex: Int, asset: PHAsset) {
-        self.addEntry(row: -1, cellIndex: cellIndex, asset: asset)
+        self.addEntry(row: 0, cellIndex: cellIndex, asset: asset)
     }
     
     func addEntry(row row: Int, cellIndex: Int, asset: PHAsset) {
@@ -32,7 +36,7 @@ class MPCheckMarkStorage {
     }
     
     func isEntryAlreadySelected(cellIndex cellIndex: Int) -> Bool {
-        return self.isEntryAlreadySelected(row: -1, cellIndex: cellIndex)
+        return self.isEntryAlreadySelected(row: 0, cellIndex: cellIndex)
     }
     
     func isEntryAlreadySelected(row row: Int, cellIndex: Int) -> Bool {
@@ -45,7 +49,7 @@ class MPCheckMarkStorage {
     }
     
     func removeIfAlreadyChecked(cellIndex cellIndex: Int, asset: PHAsset) -> Bool {
-        return self.removeIfAlreadyChecked(row: -1, cellIndex: cellIndex, asset: asset)
+        return self.removeIfAlreadyChecked(row: 0, cellIndex: cellIndex, asset: asset)
     }
     
     func removeIfAlreadyChecked(row row: Int, cellIndex: Int, asset: PHAsset) -> Bool {
@@ -61,7 +65,17 @@ class MPCheckMarkStorage {
     }
     
     func getCheckedCellIndexList() -> [Int] {
-        return self.getCheckedCellIndexListInRow(-1)
+        return self.getCheckedCellIndexListInRow(0)
+    }
+    
+    func getCheckedRowIndexList() -> [Int] {
+        var rowIndexes: [Int] = []
+        for (r, _, _) in checkedEntry {
+            if r >= 0 {
+                rowIndexes.append(r)
+            }
+        }
+        return rowIndexes
     }
     
     func getCheckedCellIndexListInRow(row: Int) -> [Int] {
@@ -82,4 +96,14 @@ class MPCheckMarkStorage {
         return result
     }
     
+    func getAllCheckedIndexPaths() -> [NSIndexPath] {
+        var paths: [NSIndexPath] = []
+        let rowIndexes = self.getCheckedRowIndexList()
+        for _rowIndex in rowIndexes {
+            for _cellIndex in self.getCheckedCellIndexListInRow(_rowIndex) {
+                paths.append(NSIndexPath(forItem: _cellIndex, inSection: _rowIndex))
+            }
+        }
+        return paths
+    }
 }
