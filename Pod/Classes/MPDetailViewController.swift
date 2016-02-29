@@ -20,7 +20,7 @@ class MPDetailViewController: UIViewController,
     var imageFetchSize: CGSize = CGSizeZero
     
     var assetsFetchResults: PHFetchResult?
-    var rowIndex: Int? = 0 // only useful if parent vc is not memory list
+    var rowIndex: Int? = 0 // only useful if parent vc is memory list
     var startCellIndex: Int = 0
     let imageManager: PHImageManager = PHImageManager()
     
@@ -183,7 +183,14 @@ class MPDetailViewController: UIViewController,
         
         let cellIndex = self.getCurrentCellIndex()
         
-        if self.isSelectedTooMany() && self.isSelectingNewItem(cellIndex) {
+        var isSelectingNewItem: Bool = false
+        if self.rowIndex != nil {
+            isSelectingNewItem = self.isSelectingNewItem(self.rowIndex!, cellIndex: cellIndex)
+        } else {
+            isSelectingNewItem = self.isSelectingNewItem(cellIndex)
+        }
+        
+        if self.isSelectedTooMany() && isSelectingNewItem {
             // Cannot select more, but we can undo selecting for selected items
         } else {
         
@@ -237,6 +244,10 @@ class MPDetailViewController: UIViewController,
     
     private func isSelectingNewItem(cellIndex: Int) -> Bool {
         return !MPCheckMarkStorage.sharedInstance.isEntryAlreadySelected(cellIndex: cellIndex)
+    }
+    
+    private func isSelectingNewItem(rowIndex: Int, cellIndex: Int) -> Bool {
+        return !MPCheckMarkStorage.sharedInstance.isEntryAlreadySelected(row: rowIndex, cellIndex: cellIndex)
     }
     
     private func isSelectedTooMany() -> Bool {
