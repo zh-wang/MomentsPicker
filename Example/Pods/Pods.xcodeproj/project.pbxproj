@@ -26,6 +26,7 @@
 		AE240BA770B6889D48A9C4A2EFE97D07 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF49F61B9C6DBA3743C9D56D37956883 /* Utils.swift */; };
 		C59C9DF108EC7ADA28B14F9C22ED94E6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E36762FF8E4A4E113EEC970F71E699C /* Foundation.framework */; };
 		C7CC79DC247DEA8B043936F8023B524B /* MPRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFDEBA0EE5F5699888F84782C0F3E57 /* MPRootViewController.swift */; };
+		C8537EBD1C843EFC00F29DA6 /* PagedCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8537EBC1C843EFC00F29DA6 /* PagedCollectionView.swift */; };
 		C885EE3B1C7C597D00DB438C /* MPDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C885EE3A1C7C597D00DB438C /* MPDetailViewController.swift */; };
 		C885EE3D1C7D7E8B00DB438C /* MPDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C885EE3C1C7D7E8B00DB438C /* MPDetailViewCell.swift */; };
 		C8992E261C7DAB3700419684 /* FALBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8992E251C7DAB3700419684 /* FALBackButton.swift */; };
@@ -99,6 +100,7 @@
 		B09DBE185814C91FD44027C027320D45 /* MPCheckMarkView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MPCheckMarkView.swift; sourceTree = "<group>"; };
 		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BB62B48B5C13826AE2469AD232B343D0 /* Pods_MomentsPicker_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MomentsPicker_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8537EBC1C843EFC00F29DA6 /* PagedCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagedCollectionView.swift; sourceTree = "<group>"; };
 		C885EE3A1C7C597D00DB438C /* MPDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPDetailViewController.swift; sourceTree = "<group>"; };
 		C885EE3C1C7D7E8B00DB438C /* MPDetailViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPDetailViewCell.swift; sourceTree = "<group>"; };
 		C8992E251C7DAB3700419684 /* FALBackButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FALBackButton.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				C885EE3A1C7C597D00DB438C /* MPDetailViewController.swift */,
 				5B1ACD0F7B838EC382DB2FF893F14140 /* MPViewControllerDelegate.swift */,
 				E3E46016A58C6633EC1721AB62E1E6DA /* MPMomentsListViewCellDelegate.swift */,
+				C8537EBC1C843EFC00F29DA6 /* PagedCollectionView.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -490,6 +493,7 @@
 				22C93D2B7AB6D64C72DD1B8AFBFD18E2 /* MPConfig.swift in Sources */,
 				4BCAF177F6028EB631CBE3F73E111039 /* MPListViewCell.swift in Sources */,
 				E318121096E6AB1A78488E08E8D23369 /* MPListViewController.swift in Sources */,
+				C8537EBD1C843EFC00F29DA6 /* PagedCollectionView.swift in Sources */,
 				C885EE3D1C7D7E8B00DB438C /* MPDetailViewCell.swift in Sources */,
 				A9217A138867DC4B1413EAD2B5C51A96 /* MPMomentsListViewCell.swift in Sources */,
 				2AFFF1A39AC0473E299B46E996EE5A9E /* MPMomentsListViewCellDelegate.swift in Sources */,

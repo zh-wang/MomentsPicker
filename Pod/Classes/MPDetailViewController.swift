@@ -12,7 +12,9 @@ import Photos
 class MPDetailViewController: UIViewController,
     UICollectionViewDelegate,
     UICollectionViewDelegateFlowLayout,
-    UICollectionViewDataSource {
+    UICollectionViewDataSource,
+    PagedCollectionViewDelegate
+    {
     
     var config: MPConfig?
     var delegate: MPViewControllerDelegate?
@@ -24,7 +26,7 @@ class MPDetailViewController: UIViewController,
     var startCellIndex: Int = 0
     let imageManager: PHImageManager = PHImageManager()
     
-    var collectionView: UICollectionView!
+    var collectionView: PagedCollectionView!
     var backBtn: FALBackButton = FALBackButton(frame: CGRectZero)
     var checkMark: MPCheckMarkView!
     var indicator: UILabel = UILabel(frame: CGRectZero)
@@ -44,13 +46,14 @@ class MPDetailViewController: UIViewController,
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         
-        self.collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
+        self.collectionView = PagedCollectionView(frame: CGRectZero, collectionViewLayout: layout)
         collectionView.pagingEnabled = true
         collectionView.frame = self.view.bounds
         collectionView.registerClass(MPDetailViewCell.classForCoder(), forCellWithReuseIdentifier: "dcell")
         collectionView.backgroundColor = UIColor.whiteColor()
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.pageDelegate = self
         self.view.addSubview(self.collectionView)
         
         let scale = UIScreen.mainScreen().scale
@@ -149,21 +152,18 @@ class MPDetailViewController: UIViewController,
         return cell
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.collectionView.didPageScrolled()
+    }
+    
+    func didPageChanged(fromIndex fromIndex: Int, toIndex: Int) {
         let currentIndex = self.getCurrentCellIndex()
         if currentIndex > 0 {
-            self.indicator.text = self.buildIndicatorText(currentIndex: currentIndex)
+            self.indicator.text = self.buildIndicatorText(currentIndex: toIndex)
         }
         
         self.updateCheckMark()
     }
-    
-//    func scrollViewDidScroll(scrollView: UIScrollView) {
-//        let currentIndex = self.getCurrentCellIndex()
-//        if currentIndex > 0 {
-//            self.indicator.text = self.buildIndicatorText(currentIndex: currentIndex)
-//        }
-//    }
     
     // MARK: - handlers
     
