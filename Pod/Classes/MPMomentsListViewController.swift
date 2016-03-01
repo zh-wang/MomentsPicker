@@ -166,16 +166,35 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-    func isSelectionEnable(row row: Int, cellIndex: Int) -> Bool {
+    /* delegate funcs of moments cell */
+    
+    func isSelectionEnable(row row: Int, cellIndex: Int, cell: MPMomentsListViewCell) -> Bool {
         // If already selected too many and want to select a new one, disallow
         return !(self.isSelectedTooMany() && isSelectingNewItem(row: row, cellIndex: cellIndex))
     }
     
-    func didSelectImageInCell(row row: Int, cellIndex: Int) {
-        self.pushDetailViewController(cellIndex: cellIndex, row: row)
+    func didSelectImageInCell(row row: Int, cellIndex: Int, cell: MPMomentsListViewCell) {
+        if (self.config?.needDetailViewController ?? true) {
+            self.pushDetailViewController(cellIndex: cellIndex, row: row)
+        } else {
+            
+            cell.updateCheckMarkInMomentsCell(cellIndex: cellIndex)
+            
+            self.changeTitleWhenSelected()
+            
+            let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
+            self.footerView.updateSelectionCounter()
+            
+            if let delegate = self.delegate {
+                delegate.didSelectionCounterChanged(self, counter: counter)
+            }
+        }
     }
     
-    func didTapCheckMark(row row: Int, cellIndex: Int) {
+    func didTapCheckMark(row row: Int, cellIndex: Int, cell: MPMomentsListViewCell) {
+        
+        cell.updateCheckMarkInMomentsCell(cellIndex: cellIndex)
+        
         self.changeTitleWhenSelected()
         
         let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()

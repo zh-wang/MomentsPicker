@@ -21,6 +21,8 @@ public enum MPStartingPosition {
 
 public class MPConfig {
 
+    public var needDetailViewController = true
+    
     public var onlyIncludeStaticImage = true
     public var selectionRange: (Int, Int)? = nil
     public var staticFooterView: UIView? = nil

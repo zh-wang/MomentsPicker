@@ -130,15 +130,15 @@ class MPMomentsListViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        self.handleSelectionAtIndexPath(indexPath)
+        self.cellDelegate?.didSelectImageInCell(row: self.rowInMomeryList, cellIndex: indexPath.item, cell: self)
     }
     
     // MARK: - handlers
     
     @objc private func handleTapOnCheckMark(sender: UITapGestureRecognizer) {
         if let view = (sender.view as? MPCheckMarkView) {
-            self.updateCheckMark(indexPath: view.nsIndexPath)
-            cellDelegate?.didTapCheckMark(row: self.rowInMomeryList, cellIndex: view.nsIndexPath.item)
+//            self.updateCheckMark(indexPath: view.nsIndexPath)
+            cellDelegate?.didTapCheckMark(row: self.rowInMomeryList, cellIndex: view.nsIndexPath.item, cell: self)
         }
     }
     
@@ -155,12 +155,11 @@ class MPMomentsListViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
         }
     }
     
-    // MARK: - private funcs
-    
-    private func updateCheckMark(indexPath indexPath: NSIndexPath) {
+    func updateCheckMarkInMomentsCell(cellIndex cellIndex: Int) -> Bool {
         if let cellDelegate = self.cellDelegate {
-            if !cellDelegate.isSelectionEnable(row: self.rowInMomeryList, cellIndex: indexPath.item) {
-                return
+            let indexPath = NSIndexPath(forItem: cellIndex, inSection: 0)
+            if !cellDelegate.isSelectionEnable(row: self.rowInMomeryList, cellIndex: indexPath.item, cell: self) {
+                return false
             }
             if let phasset = self.ensureFetchedAssets(indexPath) {
                 cellChecked[indexPath.item] = !cellChecked[indexPath.item]
@@ -172,15 +171,14 @@ class MPMomentsListViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
                 }
             }
         }
+        return true
     }
+    
+    // MARK: - private funcs
     
     private func ensureFetchedAssets(indexPath: NSIndexPath) -> PHAsset? {
         let maybePhasset = self.fetchResult?[indexPath.item] as? PHAsset
         return maybePhasset
-    }
-    
-    private func handleSelectionAtIndexPath(indexPath: NSIndexPath) {
-        self.cellDelegate?.didSelectImageInCell(row: self.rowInMomeryList, cellIndex: indexPath.item)
     }
     
 }

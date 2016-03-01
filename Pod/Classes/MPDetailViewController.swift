@@ -82,7 +82,8 @@ class MPDetailViewController: UIViewController,
         self.indicator.textAlignment = NSTextAlignment.Center
         self.view.addSubview(self.indicator)
         
-        self.updateCheckMark()
+        self.collectionView.currentPageIndex = self.startCellIndex
+        self.updateCheckMark(toIndex: self.collectionView.currentPageIndex)
         
     }
     
@@ -157,12 +158,8 @@ class MPDetailViewController: UIViewController,
     }
     
     func didPageChanged(fromIndex fromIndex: Int, toIndex: Int) {
-        let currentIndex = self.getCurrentCellIndex()
-        if currentIndex > 0 {
-            self.indicator.text = self.buildIndicatorText(currentIndex: toIndex)
-        }
-        
-        self.updateCheckMark()
+        self.indicator.text = self.buildIndicatorText(currentIndex: toIndex)
+        self.updateCheckMark(toIndex: toIndex)
     }
     
     // MARK: - handlers
@@ -179,10 +176,7 @@ class MPDetailViewController: UIViewController,
     }
     
     @objc private func onTapCheckMark(sender: UITapGestureRecognizer) {
-        if self.getCurrentCellIndex() < 0 { return }
-        
-        let cellIndex = self.getCurrentCellIndex()
-        
+        let cellIndex = self.collectionView.currentPageIndex
         var isSelectingNewItem: Bool = false
         if self.rowIndex != nil {
             isSelectingNewItem = self.isSelectingNewItem(self.rowIndex!, cellIndex: cellIndex)
@@ -193,9 +187,7 @@ class MPDetailViewController: UIViewController,
         if self.isSelectedTooMany() && isSelectingNewItem {
             // Cannot select more, but we can undo selecting for selected items
         } else {
-        
             let asset = self.assetsFetchResults![cellIndex] as! PHAsset
-                
             if self.rowIndex != nil {
                 if MPCheckMarkStorage.sharedInstance.removeIfAlreadyChecked(row: self.rowIndex!, cellIndex: cellIndex, asset: asset) {
                     // already checked, remove it
@@ -210,31 +202,19 @@ class MPDetailViewController: UIViewController,
                 }
             }
             
-            self.updateCheckMark()
+            self.updateCheckMark(toIndex: self.collectionView.currentPageIndex)
             self.footerView.updateSelectionCounter()
         }
     }
     
     // MARK: - private funcs
     
-    private func updateCheckMark() {
-        
-        if self.getCurrentCellIndex() < 0 { return }
-        
-        let cellIndex = self.getCurrentCellIndex()
-        
+    private func updateCheckMark(toIndex toIndex: Int) {
         if self.rowIndex != nil {
-            self.checkMark.checked = MPCheckMarkStorage.sharedInstance.isEntryAlreadySelected(row: self.rowIndex!, cellIndex: cellIndex)
+            self.checkMark.checked = MPCheckMarkStorage.sharedInstance.isEntryAlreadySelected(row: self.rowIndex!, cellIndex: toIndex)
         } else {
-            self.checkMark.checked = MPCheckMarkStorage.sharedInstance.isEntryAlreadySelected(cellIndex: cellIndex)
+            self.checkMark.checked = MPCheckMarkStorage.sharedInstance.isEntryAlreadySelected(cellIndex: toIndex)
         }
-    }
-    
-    private func getCurrentCellIndex() -> Int {
-        if self.collectionView.indexPathsForVisibleItems().count > 0 {
-            return self.collectionView.indexPathsForVisibleItems()[0].item
-        }
-        return self.startCellIndex
     }
     
     private func buildIndicatorText(currentIndex currentIndex: Int) -> String {

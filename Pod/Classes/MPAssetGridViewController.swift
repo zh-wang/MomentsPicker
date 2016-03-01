@@ -136,7 +136,12 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        self.pushDetailViewController(indexPath: indexPath)
+        if (self.config?.needDetailViewController ?? true) {
+            self.pushDetailViewController(indexPath: indexPath)
+        } else {
+            self.updateCheckMark(indexPath: indexPath)
+            self.footerView.updateSelectionCounter()
+        }
     }
     
     // MARK: - handlers
@@ -144,7 +149,6 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
     @objc private func handleTapOnCheckMark(sender: UITapGestureRecognizer) {
         if let view = (sender.view as? MPCheckMarkView) {
             self.updateCheckMark(indexPath: view.nsIndexPath)
-            
             self.footerView.updateSelectionCounter()
         }
     }

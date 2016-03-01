@@ -35,6 +35,7 @@ class ViewController: UIViewController, MPViewControllerDelegate {
                 let config = MPConfig()
                 config.selectionRange = (1, 2)
                 config.showSelectedCounter = true
+                config.needDetailViewController = true
                 
                 let label = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44))
                 label.text = "Select 1 - 2 photos"
