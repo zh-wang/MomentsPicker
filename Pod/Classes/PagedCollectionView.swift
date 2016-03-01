@@ -8,22 +8,22 @@
 
 import Foundation
 
-protocol PagedCollectionViewDelegate {
-    func didPageChanged(fromIndex fromIndex: Int, toIndex: Int)
-}
-
 class PagedCollectionView: UICollectionView {
     
-    var pageDelegate: PagedCollectionViewDelegate?
-    var currentPageIndex: Int = 0
+    private var currentPageIndex: Int = 0
+    
+    var pageIndexObv: Observable<Int> = Observable<Int>(value: 0)
     
     func didPageScrolled() {
         let newPageIndex = Int((self.contentOffset.x + self.bounds.width/2) / self.bounds.width)
         if self.currentPageIndex != newPageIndex {
-            print("a: \(currentPageIndex) -> b: \(newPageIndex)")
-            self.pageDelegate?.didPageChanged(fromIndex: self.currentPageIndex, toIndex: newPageIndex)
             self.currentPageIndex = newPageIndex
+            self.pageIndexObv.updateValue(newPageIndex)
         }
+    }
+    
+    func getCurrentPageIndex() -> Int {
+        return self.currentPageIndex
     }
     
 }

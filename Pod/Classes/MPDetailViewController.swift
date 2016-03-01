@@ -12,8 +12,7 @@ import Photos
 class MPDetailViewController: UIViewController,
     UICollectionViewDelegate,
     UICollectionViewDelegateFlowLayout,
-    UICollectionViewDataSource,
-    PagedCollectionViewDelegate
+    UICollectionViewDataSource
     {
     
     var config: MPConfig?
@@ -53,7 +52,6 @@ class MPDetailViewController: UIViewController,
         collectionView.backgroundColor = UIColor.whiteColor()
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.pageDelegate = self
         self.view.addSubview(self.collectionView)
         
         let scale = UIScreen.mainScreen().scale
@@ -78,12 +76,28 @@ class MPDetailViewController: UIViewController,
         self.indicator.frame = CGRectMake(0, 4, self.view.bounds.width, 48)
         self.indicator.text = self.buildIndicatorText(currentIndex: self.startCellIndex)
         self.indicator.textColor = UIColor.blackColor()
-        self.indicator.font = UIFont.systemFontOfSize(22)
+        if #available(iOS 9.0, *) {
+            self.indicator.font = UIFont.monospacedDigitSystemFontOfSize(22, weight: 0)
+        } else {
+            // Fallback on earlier versions
+            self.indicator.font = UIFont.systemFontOfSize(22)
+        }
         self.indicator.textAlignment = NSTextAlignment.Center
         self.view.addSubview(self.indicator)
         
-        self.collectionView.currentPageIndex = self.startCellIndex
-        self.updateCheckMark(toIndex: self.collectionView.currentPageIndex)
+        // observers
+        // bind number of selected with check mark UI & footer view's counter
+        MPCheckMarkStorage.sharedInstance.numberOfSelectedObv.addObserverPost("NUMBER_OF_SELECTED_OBV",
+            didSetObserver: { oldValue, newValue in
+                self.updateCheckMark(cellIndex: self.collectionView.getCurrentPageIndex())
+                self.footerView.updateSelectionCounter()
+            })
+        // bind page index with indicator & check mark UI
+        self.collectionView.pageIndexObv.addObserverPost("PAGE_INDEX_OBV",
+            didSetObserver: { oldValue, newValue in
+                self.indicator.text = self.buildIndicatorText(currentIndex: newValue ?? -1)
+                self.updateCheckMark(cellIndex: self.collectionView.getCurrentPageIndex())
+            })
         
     }
     
@@ -107,6 +121,7 @@ class MPDetailViewController: UIViewController,
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
         self.navigationController?.navigationBar.hidden = true
         self.popGesture = navigationController?.interactivePopGestureRecognizer
         if self.popGesture != nil {
@@ -157,11 +172,6 @@ class MPDetailViewController: UIViewController,
         self.collectionView.didPageScrolled()
     }
     
-    func didPageChanged(fromIndex fromIndex: Int, toIndex: Int) {
-        self.indicator.text = self.buildIndicatorText(currentIndex: toIndex)
-        self.updateCheckMark(toIndex: toIndex)
-    }
-    
     // MARK: - handlers
     
     @objc private func onTapDoneButton() {
@@ -176,7 +186,7 @@ class MPDetailViewController: UIViewController,
     }
     
     @objc private func onTapCheckMark(sender: UITapGestureRecognizer) {
-        let cellIndex = self.collectionView.currentPageIndex
+        let cellIndex = self.collectionView.getCurrentPageIndex()
         var isSelectingNewItem: Bool = false
         if self.rowIndex != nil {
             isSelectingNewItem = self.isSelectingNewItem(self.rowIndex!, cellIndex: cellIndex)
@@ -201,19 +211,16 @@ class MPDetailViewController: UIViewController,
                     MPCheckMarkStorage.sharedInstance.addEntry(cellIndex: cellIndex, asset: asset)
                 }
             }
-            
-            self.updateCheckMark(toIndex: self.collectionView.currentPageIndex)
-            self.footerView.updateSelectionCounter()
         }
     }
     
     // MARK: - private funcs
     
-    private func updateCheckMark(toIndex toIndex: Int) {
+    private func updateCheckMark(cellIndex cellIndex: Int) {
         if self.rowIndex != nil {
-            self.checkMark.checked = MPCheckMarkStorage.sharedInstance.isEntryAlreadySelected(row: self.rowIndex!, cellIndex: toIndex)
+            self.checkMark.checked = MPCheckMarkStorage.sharedInstance.isEntryAlreadySelected(row: self.rowIndex!, cellIndex: cellIndex)
         } else {
-            self.checkMark.checked = MPCheckMarkStorage.sharedInstance.isEntryAlreadySelected(cellIndex: toIndex)
+            self.checkMark.checked = MPCheckMarkStorage.sharedInstance.isEntryAlreadySelected(cellIndex: cellIndex)
         }
     }
     

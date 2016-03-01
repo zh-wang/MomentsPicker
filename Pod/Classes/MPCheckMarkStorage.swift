@@ -19,6 +19,9 @@ class MPCheckMarkStorage {
     */
     private var checkedEntry: [(Int, Int, PHAsset)] = []
     
+    /* Observable count */
+    var numberOfSelectedObv: Observable<Int> = Observable<Int>(value: 0)
+    
     func clear() {
         self.checkedEntry = []
     }
@@ -28,18 +31,27 @@ class MPCheckMarkStorage {
     }
     
     func addEntry(cellIndex cellIndex: Int, asset: PHAsset) {
-        self.addEntry(row: 0, cellIndex: cellIndex, asset: asset)
+        self._addEntry(row: 0, cellIndex: cellIndex, asset: asset)
     }
     
     func addEntry(row row: Int, cellIndex: Int, asset: PHAsset) {
+        self._addEntry(row: row, cellIndex: cellIndex, asset: asset)
+    }
+    
+    private func _addEntry(row row: Int, cellIndex: Int, asset: PHAsset) {
         checkedEntry.append(row, cellIndex, asset)
+        self.numberOfSelectedObv.updateValue(self.getSelectedCounter())
     }
     
     func isEntryAlreadySelected(cellIndex cellIndex: Int) -> Bool {
-        return self.isEntryAlreadySelected(row: 0, cellIndex: cellIndex)
+        return self._isEntryAlreadySelected(row: 0, cellIndex: cellIndex)
     }
     
     func isEntryAlreadySelected(row row: Int, cellIndex: Int) -> Bool {
+        return self._isEntryAlreadySelected(row: row, cellIndex: cellIndex)
+    }
+    
+    private func _isEntryAlreadySelected(row row: Int, cellIndex: Int) -> Bool {
         for (r, c, _) in checkedEntry {
             if r == row && cellIndex == c {
                 return true
@@ -49,14 +61,19 @@ class MPCheckMarkStorage {
     }
     
     func removeIfAlreadyChecked(cellIndex cellIndex: Int, asset: PHAsset) -> Bool {
-        return self.removeIfAlreadyChecked(row: 0, cellIndex: cellIndex, asset: asset)
+        return self._removeIfAlreadyChecked(row: 0, cellIndex: cellIndex, asset: asset)
     }
     
     func removeIfAlreadyChecked(row row: Int, cellIndex: Int, asset: PHAsset) -> Bool {
+        return self._removeIfAlreadyChecked(row: row, cellIndex: cellIndex, asset: asset)
+    }
+    
+    private func _removeIfAlreadyChecked(row row: Int, cellIndex: Int, asset: PHAsset) -> Bool {
         var index = 0
         for (r, c, _) in checkedEntry {
             if r == row && cellIndex == c {
                 checkedEntry.removeAtIndex(index)
+                self.numberOfSelectedObv.updateValue(self.getSelectedCounter())
                 return true
             }
             index++
