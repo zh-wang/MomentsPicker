@@ -33,10 +33,11 @@ class ViewController: UIViewController, MPViewControllerDelegate {
     func tapImportBtn() {
         Utils.safetyPhotoPickerWrapper(allowBlock: {
                 let config = MPConfig()
+                config.style = MPStyle.BOTTOM_DYNAMIC_BAR
                 config.selectionRange = (1, 2)
-                config.showSelectedCounter = true
+                config.showSelectedCounterInTitle = true
                 config.needDetailViewController = true
-                
+            
                 let label = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44))
                 label.text = "Select 1 - 2 photos"
                 label.textColor = UIColor.blackColor()
@@ -44,7 +45,7 @@ class ViewController: UIViewController, MPViewControllerDelegate {
                 label.textAlignment = NSTextAlignment.Center
                 config.staticFooterView = label
                 config.startingContents = .Moments
-                config.selectionEnabledColor = UIColor.redColor()
+                config.selectionEnabledColor = UIColor.cyanColor()
                 self.presentViewController(MPRootViewController.newInstance(delegate: self, config: config), animated: true, completion: nil)
             }, notAllowBlock: {
                 // Not allowed. Please Enable Photo Access in settings.

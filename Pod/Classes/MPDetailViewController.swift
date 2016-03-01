@@ -15,7 +15,7 @@ class MPDetailViewController: UIViewController,
     UICollectionViewDataSource
     {
     
-    var config: MPConfig?
+    var config: MPConfig!
     var delegate: MPViewControllerDelegate?
     
     var imageFetchSize: CGSize = CGSizeZero
@@ -87,14 +87,14 @@ class MPDetailViewController: UIViewController,
         
         // observers
         // bind number of selected with check mark UI & footer view's counter
-        MPCheckMarkStorage.sharedInstance.numberOfSelectedObv.addObserverPost("NUMBER_OF_SELECTED_OBV",
-            didSetObserver: { oldValue, newValue in
+        MPCheckMarkStorage.sharedInstance.numberOfSelectedObv.addObserverPost("NUMBER_OF_SELECTED_OBV_DETAIL_VC",
+            didSetObserver: { [unowned self] oldValue, newValue in
                 self.updateCheckMark(cellIndex: self.collectionView.getCurrentPageIndex())
                 self.footerView.updateSelectionCounter()
             })
         // bind page index with indicator & check mark UI
-        self.collectionView.pageIndexObv.addObserverPost("PAGE_INDEX_OBV",
-            didSetObserver: { oldValue, newValue in
+        self.collectionView.pageIndexObv.addObserverPost("PAGE_INDEX_OBV_DETAIL_VC",
+            didSetObserver: { [unowned self] oldValue, newValue in
                 self.indicator.text = self.buildIndicatorText(currentIndex: newValue ?? -1)
                 self.updateCheckMark(cellIndex: self.collectionView.getCurrentPageIndex())
             })
@@ -104,19 +104,18 @@ class MPDetailViewController: UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.footerView.frame = CGRectMake(0, self.view.bounds.height - 48, self.view.bounds.width, 48)
-        let footerHeight = footerView.frame.height
-        self.collectionView.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height - footerHeight)
-        self.view.addSubview(footerView)
-        if let okBtnColor = self.config?.selectionEnabledColor {
-            self.footerView.setOkBtnHighlightColor(okBtnColor)
+        if self.config.style == MPStyle.BOTTOM_DYNAMIC_BAR {
+            self.footerView.frame = CGRectMake(0, self.view.bounds.height - 48, self.view.bounds.width, 48)
+            let footerHeight = footerView.frame.height
+            self.collectionView.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height - footerHeight)
+            self.view.addSubview(footerView)
+            self.footerView.setOkBtnHighlightColor(self.config.selectionEnabledColor)
+            if let range = self.config.selectionRange {
+                self.footerView.updateSelectionRange(range)
+            }
+            self.footerView.okBtn.addTarget(self, action: Selector("onTapDoneButton"), forControlEvents: UIControlEvents.TouchUpInside)
+            self.footerView.updateSelectionCounter()
         }
-        if let range = self.config?.selectionRange {
-            self.footerView.updateSelectionRange(range)
-        }
-        self.footerView.okBtn.addTarget(self, action: Selector("onTapDoneButton"), forControlEvents: UIControlEvents.TouchUpInside)
-        
-        self.footerView.updateSelectionCounter()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -226,7 +225,7 @@ class MPDetailViewController: UIViewController,
     
     private func buildIndicatorText(currentIndex currentIndex: Int) -> String {
         let total = self.assetsFetchResults?.count ?? 0
-        return "\(currentIndex) / \(total)"
+        return "\(currentIndex + 1) / \(total)"
     }
     
     private func isSelectingNewItem(cellIndex: Int) -> Bool {
@@ -238,11 +237,9 @@ class MPDetailViewController: UIViewController,
     }
     
     private func isSelectedTooMany() -> Bool {
-        if let config = self.config {
-            if let selectionRange = config.selectionRange {
-                let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
-                return counter >= selectionRange.1 ? true : false
-            }
+        if let selectionRange = config.selectionRange {
+            let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
+            return counter >= selectionRange.1 ? true : false
         }
         return true
     }

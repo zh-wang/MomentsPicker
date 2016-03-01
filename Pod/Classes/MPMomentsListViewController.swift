@@ -11,7 +11,7 @@ import Photos
 
 class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MPMomentsListViewCellDelegate {
     
-    var config: MPConfig?
+    var config: MPConfig!
     var delegate: MPViewControllerDelegate?
     
     var assetsFetchResults: PHFetchResult? = nil /* group of assets group, which may contains videos */
@@ -31,8 +31,10 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableView.dataSource = self
         self.view.addSubview(self.tableView)
         
-//        let doneBtn = UIBarButtonItem(title: self.config?.barBtnTitleDone, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapDoneButton"))
-//        self.navigationItem.rightBarButtonItem = doneBtn
+        if self.config.style == MPStyle.TOP_RIGHT_DONE {
+            let doneBtn = UIBarButtonItem(title: self.config?.barBtnTitleDone, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapDoneButton"))
+            self.navigationItem.rightBarButtonItem = doneBtn
+        }
         
         let cancelBtn = UIBarButtonItem(title: self.config?.barBtnTitleCancel, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapCancelButton"))
         self.navigationItem.rightBarButtonItem = cancelBtn
@@ -42,32 +44,29 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Add footer view if needed
-//        if let footerView = self.config?.staticFooterView {
-//            let footerHeight = footerView.frame.height
-//            let bounds = UIScreen.mainScreen().bounds
-//            self.tableView.frame = CGRectMake(0, 0, bounds.width, bounds.height - footerHeight)
-//            
-//            let footerFrame = CGRectMake(0, bounds.height - footerHeight, bounds.width, footerHeight)
-//            footerView.frame = footerFrame
-//            self.view.addSubview(footerView)
-//        }
-        
-        self.footerView.frame = CGRectMake(0, self.view.bounds.height - 48, self.view.bounds.width, 48)
-        let footerHeight = footerView.frame.height
-        self.tableView.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height - footerHeight)
-        self.view.addSubview(footerView)
-        if let okBtnColor = self.config?.selectionEnabledColor {
-            self.footerView.setOkBtnHighlightColor(okBtnColor)
+        if self.config.style == MPStyle.BOTTOM_DYNAMIC_BAR {
+            self.footerView.frame = CGRectMake(0, self.view.bounds.height - 48, self.view.bounds.width, 48)
+            let footerHeight = footerView.frame.height
+            self.tableView.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height - footerHeight)
+            self.view.addSubview(footerView)
+            self.footerView.setOkBtnHighlightColor(self.config.selectionEnabledColor)
+            if let range = self.config.selectionRange {
+                self.footerView.updateSelectionRange(range)
+            }
+            self.footerView.okBtn.addTarget(self, action: Selector("onTapDoneButton"), forControlEvents: UIControlEvents.TouchUpInside)
+        } else { // Add custom footer view if needed
+            if let footerView = self.config.staticFooterView {
+                let footerHeight = footerView.frame.height
+                let bounds = UIScreen.mainScreen().bounds
+                self.tableView.frame = CGRectMake(0, 0, bounds.width, bounds.height - footerHeight)
+                
+                let footerFrame = CGRectMake(0, bounds.height - footerHeight, bounds.width, footerHeight)
+                footerView.frame = footerFrame
+                self.view.addSubview(footerView)
+            }
         }
-
-        // TODO
-        if let range = self.config?.selectionRange {
-            self.footerView.updateSelectionRange(range)
-        }
-        self.footerView.okBtn.addTarget(self, action: Selector("onTapDoneButton"), forControlEvents: UIControlEvents.TouchUpInside)
         
-        if self.config?.startingPosition == .BOTTOM {
+        if self.config.startingPosition == .BOTTOM {
             self.tableView.scroll2Bottom(dataSource: self.assetsFetchResultsOnlyImage, animated: false) // scroll to bottom
         }
     }
@@ -174,7 +173,7 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func didSelectImageInCell(row row: Int, cellIndex: Int, cell: MPMomentsListViewCell) {
-        if (self.config?.needDetailViewController ?? true) {
+        if self.config.needDetailViewController {
             self.pushDetailViewController(cellIndex: cellIndex, row: row)
         } else {
             
@@ -184,6 +183,7 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
             
             let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
             self.footerView.updateSelectionCounter()
+            self.toggleDoneAvailability()
             
             if let delegate = self.delegate {
                 delegate.didSelectionCounterChanged(self, counter: counter)
@@ -199,6 +199,7 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         
         let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
         self.footerView.updateSelectionCounter()
+        self.toggleDoneAvailability()
         
         if let delegate = self.delegate {
             delegate.didSelectionCounterChanged(self, counter: counter)
@@ -252,21 +253,30 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     private func isSelectedTooMany() -> Bool {
-        if let config = self.config {
-            if let selectionRange = config.selectionRange {
-                let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
-                return counter >= selectionRange.1 ? true : false
-            }
+        if let selectionRange = config.selectionRange {
+            let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
+            return counter >= selectionRange.1 ? true : false
         }
         return true
     }
     
     private func changeTitleWhenSelected() {
-        if let config = self.config {
-            if config.showSelectedCounter {
-                let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
-                let selectedCounterText = String(format: config.selectedCounterText, arguments: [counter])
-                self.navigationItem.title = selectedCounterText
+        if config.showSelectedCounterInTitle {
+            let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
+            let selectedCounterText = String(format: config.selectedCounterText, arguments: [counter])
+            self.navigationItem.title = selectedCounterText
+        }
+    }
+    
+    private func toggleDoneAvailability() {
+        if let selectionRange = config.selectionRange {
+            let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
+            let min = selectionRange.0
+            let max = selectionRange.1
+            if counter >= min && counter <= max {
+                self.navigationItem.rightBarButtonItem!.enabled = true
+            } else {
+                self.navigationItem.rightBarButtonItem!.enabled = false
             }
         }
     }

@@ -19,14 +19,20 @@ public enum MPStartingPosition {
     case BOTTOM
 }
 
+public enum MPStyle {
+    case TOP_RIGHT_DONE         // default style
+    case BOTTOM_DYNAMIC_BAR     // bottom bar with indicator & done button
+}
+
 public class MPConfig {
 
     public var needDetailViewController = true
+    public var style: MPStyle = .TOP_RIGHT_DONE
     
     public var onlyIncludeStaticImage = true
     public var selectionRange: (Int, Int)? = nil
-    public var staticFooterView: UIView? = nil
-    public var showSelectedCounter = true
+    public var staticFooterView: UIView? = nil // if style is BOTTOM_DYNAMIC_BAR, this will be ignored
+    public var showSelectedCounterInTitle = true // if style is BOTTOM_DYNAMIC_BAR, this will be set to false
     public var startingContents = MPContentsType.Moments
     public var startingPosition = MPStartingPosition.BOTTOM
     
@@ -47,6 +53,11 @@ public class MPConfig {
     
     func safetyCheck() {
         assert(selectedCounterText.componentsSeparatedByString("%d").count == 2, "only one %d is expected")
+        
+        if self.style == .BOTTOM_DYNAMIC_BAR {
+            self.showSelectedCounterInTitle = false
+        }
+        
     }
     
 }

@@ -23,7 +23,7 @@ class Observable<T> {
             }
         }
         didSet{
-            for (_,observer) in observers {
+            for (_, observer) in observers {
                 observer.post?(oldValue: oldValue, currentValue: observableProperty)
             }
         }
@@ -37,6 +37,10 @@ class Observable<T> {
         self.observableProperty = value
     }
     
+    func getValue() -> T? {
+        return observableProperty
+    }
+    
     func addObserver(identifier: String, observer: Observer) {
         observers[identifier] = observer
     }
@@ -47,6 +51,10 @@ class Observable<T> {
     
     func removeObserver(identifer: String) {
         observers.removeValueForKey(identifer)
+    }
+    
+    func removeAllObserver() {
+        observers.removeAll(keepCapacity: false)
     }
 
 }

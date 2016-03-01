@@ -12,12 +12,13 @@ import Photos
 class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,
     UICollectionViewDataSource {
     
-    var config: MPConfig?
+    var config: MPConfig!
     var delegate: MPViewControllerDelegate?
     
     var assetsFetchResults: PHFetchResult?
 //    var assetCollection: PHAssetCollection?
-    var cellChecked: [Bool] = []
+    
+    var cellCheckedObv: Observable<[Bool]> = Observable<[Bool]>(value: [])
     
     var assetGridThumbnailSize: CGSize = CGSizeMake(0, 0)
     
@@ -44,58 +45,78 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
         cellGrid.delegate = self
         self.view.addSubview(cellGrid)
         
-//        let doneBtn = UIBarButtonItem(title: self.config?.barBtnTitleDone, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapDoneButton"))
-//        self.navigationItem.rightBarButtonItem = doneBtn
+        if self.config.style == MPStyle.TOP_RIGHT_DONE {
+            let doneBtn = UIBarButtonItem(title: self.config.barBtnTitleDone, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapDoneButton"))
+            self.navigationItem.rightBarButtonItem = doneBtn
+        }
         
-        let cancelBtn = UIBarButtonItem(title: self.config?.barBtnTitleCancel, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapCancelButton"))
+        let cancelBtn = UIBarButtonItem(title: self.config.barBtnTitleCancel, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapCancelButton"))
         self.navigationItem.rightBarButtonItem = cancelBtn
         self.navigationItem.rightBarButtonItem?.enabled = true
         
         let scale = UIScreen.mainScreen().scale
         let ratio = PHOTO_DEFAULT_RATIO_H_2_W.IPHONE_6.rawValue
         assetGridThumbnailSize = CGSizeMake(width * scale, width * scale * ratio)
+        
+        // observers
+        // bind number of selected with top right done button enabled & footer view's counter
+        MPCheckMarkStorage.sharedInstance.numberOfSelectedObv.addObserverPost("NUMBER_OF_SELECTED_OBV_ASSET_VC",
+            didSetObserver: { [unowned self] oldValue, newValue in
+                self.footerView.updateSelectionCounter()
+                self.toggleDoneAvailability()
+                self.changeTitleWhenSelected()
+            })
+        
+        self.cellCheckedObv.addObserverPost("CELL_CHECKED_OBV_ASSET_VC",
+            didSetObserver: { [unowned self] oldValue, newValue in
+                // only update changed cell
+                var indexPaths: [NSIndexPath] = []
+                let n = oldValue!.count
+                for i in 0..<n {
+                    if oldValue![i] != newValue![i] {
+                        indexPaths.append(NSIndexPath(forItem: i, inSection: 0))
+                    }
+                }
+                if indexPaths.count > 0 {
+                    self.cellGrid.reloadItemsAtIndexPaths(indexPaths)
+                }
+            })
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Add footer view if needed
-//        if let footerView = self.config?.staticFooterView {
-//            let footerHeight = footerView.frame.height
-//            let bounds = UIScreen.mainScreen().bounds
-//            cellGrid.frame = CGRectMake(0, 0, bounds.width, bounds.height - footerHeight)
-//            
-//            let footerFrame = CGRectMake(0, bounds.height - footerHeight, bounds.width, footerHeight)
-//            footerView.frame = footerFrame
-//            self.view.addSubview(footerView)
-//        }
-        
-        self.footerView.frame = CGRectMake(0, self.view.bounds.height - 48, self.view.bounds.width, 48)
-        let footerHeight = footerView.frame.height
-        self.cellGrid.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height - footerHeight)
-        self.view.addSubview(footerView)
-        if let okBtnColor = self.config?.selectionEnabledColor {
-            self.footerView.setOkBtnHighlightColor(okBtnColor)
+        if self.config.style == MPStyle.BOTTOM_DYNAMIC_BAR {
+            self.footerView.frame = CGRectMake(0, self.view.bounds.height - 48, self.view.bounds.width, 48)
+            let footerHeight = footerView.frame.height
+            self.cellGrid.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height - footerHeight)
+            self.view.addSubview(footerView)
+            self.footerView.setOkBtnHighlightColor(self.config.selectionEnabledColor)
+            if let range = self.config.selectionRange {
+                self.footerView.updateSelectionRange(range)
+            }
+            self.footerView.okBtn.addTarget(self, action: Selector("onTapDoneButton"), forControlEvents: UIControlEvents.TouchUpInside)
+        } else { // Add custom footer view if needed
+            if let footerView = self.config.staticFooterView {
+                let footerHeight = footerView.frame.height
+                let bounds = UIScreen.mainScreen().bounds
+                cellGrid.frame = CGRectMake(0, 0, bounds.width, bounds.height - footerHeight)
+                
+                let footerFrame = CGRectMake(0, bounds.height - footerHeight, bounds.width, footerHeight)
+                footerView.frame = footerFrame
+                self.view.addSubview(footerView)
+            }
         }
-        if let range = self.config?.selectionRange {
-            self.footerView.updateSelectionRange(range)
-        }
-        self.footerView.okBtn.addTarget(self, action: Selector("onTapDoneButton"), forControlEvents: UIControlEvents.TouchUpInside)
         
-        if self.config?.startingPosition == .BOTTOM {
+        if self.config.startingPosition == .BOTTOM {
             self.cellGrid.scroll2Bottom(dataSourceCount: self.assetsFetchResults!.count, animated: false) // scroll to bottom
         }
-        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
         self.navigationController?.navigationBar.hidden = false
-        
         self.prepareData()
-        self.footerView.updateSelectionCounter()
-        self.cellGrid.reloadData()
     }
     
     // MARK: - delegates
@@ -130,17 +151,17 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
                 cell.imageView.image = result
             })
         
-        cell.checkMark.checked = cellChecked[indexPath.item]
+        let checked = self.cellCheckedObv.getValue()?[indexPath.item] ?? false
+        cell.checkMark.checked = checked
         
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if (self.config?.needDetailViewController ?? true) {
+        if self.config.needDetailViewController {
             self.pushDetailViewController(indexPath: indexPath)
         } else {
             self.updateCheckMark(indexPath: indexPath)
-            self.footerView.updateSelectionCounter()
         }
     }
     
@@ -149,7 +170,6 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
     @objc private func handleTapOnCheckMark(sender: UITapGestureRecognizer) {
         if let view = (sender.view as? MPCheckMarkView) {
             self.updateCheckMark(indexPath: view.nsIndexPath)
-            self.footerView.updateSelectionCounter()
         }
     }
     
@@ -170,11 +190,12 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
     // MARK: - funcs
     
     func prepareData() {
-        self.cellChecked = [Bool](count: self.assetsFetchResults!.count, repeatedValue: false)
+        var cellChecked = [Bool](count: self.assetsFetchResults!.count, repeatedValue: false)
         let indexList = MPCheckMarkStorage.sharedInstance.getCheckedCellIndexList()
         indexList.each { checkedCellIndex in
-            self.cellChecked[checkedCellIndex] = true
+            cellChecked[checkedCellIndex] = true
         }
+        self.cellCheckedObv.updateValue(cellChecked)
     }
     
     // MARK: - private funcs
@@ -183,17 +204,18 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
         if self.isSelectedTooMany() && self.isSelectingNewItem(indexPath.item) {
             // Cannot select more, but we can undo selecting for selected items
         } else {
+            
+            if var cellChecked = self.cellCheckedObv.getValue() {
+                cellChecked[indexPath.item] = !cellChecked[indexPath.item]
+                self.cellCheckedObv.updateValue(cellChecked)
+            }
+            
             let asset = self.assetsFetchResults![indexPath.item] as! PHAsset
-            cellChecked[indexPath.item] = !cellChecked[indexPath.item]
-            cellGrid.reloadItemsAtIndexPaths([indexPath])
             if MPCheckMarkStorage.sharedInstance.removeIfAlreadyChecked(cellIndex: indexPath.item, asset: asset) {
                 // already checked, remove it
             } else {
                 MPCheckMarkStorage.sharedInstance.addEntry(cellIndex: indexPath.item, asset: asset)
             }
-            
-            self.changeTitleWhenSelected()
-            self.toggleDoneAvailability()
         }
     }
     
@@ -212,36 +234,30 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     private func isSelectedTooMany() -> Bool {
-        if let config = self.config {
-            if let selectionRange = config.selectionRange {
-                let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
-                return counter >= selectionRange.1 ? true : false
-            }
+        if let selectionRange = config.selectionRange {
+            let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
+            return counter >= selectionRange.1 ? true : false
         }
         return true
     }
     
     private func changeTitleWhenSelected() {
-        if let config = self.config {
-            if config.showSelectedCounter {
-                let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
-                let selectedCounterText = String(format: config.selectedCounterText, arguments: [counter])
-                self.navigationItem.title = selectedCounterText
-            }
+        if config.showSelectedCounterInTitle {
+            let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
+            let selectedCounterText = String(format: config.selectedCounterText, arguments: [counter])
+            self.navigationItem.title = selectedCounterText
         }
     }
     
     private func toggleDoneAvailability() {
-        if let config = self.config {
-            if let selectionRange = config.selectionRange {
-                let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
-                let min = selectionRange.0
-                let max = selectionRange.1
-                if counter >= min && counter <= max {
-                    self.navigationItem.rightBarButtonItem!.enabled = true
-                } else {
-                    self.navigationItem.rightBarButtonItem!.enabled = false
-                }
+        if let selectionRange = config.selectionRange {
+            let counter = MPCheckMarkStorage.sharedInstance.getSelectedCounter()
+            let min = selectionRange.0
+            let max = selectionRange.1
+            if counter >= min && counter <= max {
+                self.navigationItem.rightBarButtonItem!.enabled = true
+            } else {
+                self.navigationItem.rightBarButtonItem!.enabled = false
             }
         }
     }
