@@ -88,15 +88,19 @@ class MPDetailViewController: UIViewController,
         // observers
         // bind number of selected with check mark UI & footer view's counter
         MPCheckMarkStorage.sharedInstance.numberOfSelectedObv.addObserverPost("NUMBER_OF_SELECTED_OBV_DETAIL_VC",
-            didSetObserver: { [unowned self] oldValue, newValue in
-                self.updateCheckMark(cellIndex: self.collectionView.getCurrentPageIndex())
-                self.footerView.updateSelectionCounter()
+            didSetObserver: { [weak self] oldValue, newValue in
+                if let currentPageIndex = self?.collectionView.getCurrentPageIndex() {
+                    self?.updateCheckMark(cellIndex: currentPageIndex)
+                    self?.footerView.updateSelectionCounter()
+                }
             })
         // bind page index with indicator & check mark UI
         self.collectionView.pageIndexObv.addObserverPost("PAGE_INDEX_OBV_DETAIL_VC",
-            didSetObserver: { [unowned self] oldValue, newValue in
-                self.indicator.text = self.buildIndicatorText(currentIndex: newValue ?? -1)
-                self.updateCheckMark(cellIndex: self.collectionView.getCurrentPageIndex())
+            didSetObserver: { [weak self] oldValue, newValue in
+                if let currentPageIndex = self?.collectionView.getCurrentPageIndex() {
+                    self?.updateCheckMark(cellIndex: currentPageIndex)
+                    self?.indicator.text = self?.buildIndicatorText(currentIndex: newValue ?? -1)
+                }
             })
         
     }

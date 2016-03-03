@@ -14,8 +14,8 @@ class MPListViewController: UITableViewController {
     var delegate: MPViewControllerDelegate?
     var config: MPConfig?
     
-    var sectionTitles: [String] = []
-    var sectionFetchResults: [PHFetchResult] = []
+    private var sectionTitles: [String] = []
+    private var sectionFetchResults: [PHFetchResult] = []
     
     override func loadView() {
         super.loadView()

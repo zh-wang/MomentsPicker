@@ -37,14 +37,14 @@ class ViewController: UIViewController, MPViewControllerDelegate {
                 config.selectionRange = (1, 2)
                 config.showSelectedCounterInTitle = true
                 config.needDetailViewController = true
-            
-                let label = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44))
-                label.text = "Select 1 - 2 photos"
-                label.textColor = UIColor.blackColor()
-                label.backgroundColor = UIColor.lightGrayColor()
-                label.textAlignment = NSTextAlignment.Center
-                config.staticFooterView = label
-                config.startingContents = .Moments
+
+//                let label = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44))
+//                label.text = "Select 1 - 2 photos"
+//                label.textColor = UIColor.blackColor()
+//                label.backgroundColor = UIColor.lightGrayColor()
+//                label.textAlignment = NSTextAlignment.Center
+//                config.staticFooterView = label
+//                config.startingContents = .Moments
                 config.selectionEnabledColor = UIColor.cyanColor()
                 self.presentViewController(MPRootViewController.newInstance(delegate: self, config: config), animated: true, completion: nil)
             }, notAllowBlock: {

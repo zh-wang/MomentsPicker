@@ -33,7 +33,7 @@ public class MPConfig {
     public var selectionRange: (Int, Int)? = nil
     public var staticFooterView: UIView? = nil // if style is BOTTOM_DYNAMIC_BAR, this will be ignored
     public var showSelectedCounterInTitle = true // if style is BOTTOM_DYNAMIC_BAR, this will be set to false
-    public var startingContents = MPContentsType.Moments
+    public var startingContents = MPContentsType.AllPhotos
     public var startingPosition = MPStartingPosition.BOTTOM
     
     public var viewControllerTitlePhotos = "Photos"
@@ -57,7 +57,6 @@ public class MPConfig {
         if self.style == .BOTTOM_DYNAMIC_BAR {
             self.showSelectedCounterInTitle = false
         }
-        
     }
     
 }

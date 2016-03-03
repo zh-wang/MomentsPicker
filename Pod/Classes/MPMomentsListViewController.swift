@@ -32,11 +32,11 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         self.view.addSubview(self.tableView)
         
         if self.config.style == MPStyle.TOP_RIGHT_DONE {
-            let doneBtn = UIBarButtonItem(title: self.config?.barBtnTitleDone, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapDoneButton"))
+            let doneBtn = UIBarButtonItem(title: self.config.barBtnTitleDone, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapDoneButton"))
             self.navigationItem.rightBarButtonItem = doneBtn
         }
         
-        let cancelBtn = UIBarButtonItem(title: self.config?.barBtnTitleCancel, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapCancelButton"))
+        let cancelBtn = UIBarButtonItem(title: self.config.barBtnTitleCancel, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("onTapCancelButton"))
         self.navigationItem.rightBarButtonItem = cancelBtn
         self.navigationItem.rightBarButtonItem?.enabled = true
     }
@@ -158,13 +158,6 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         return cell
     }
     
-    func onTapCancelButton() {
-        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
-        if let delegate = self.delegate {
-            delegate.pickCancelled(self)
-        }
-    }
-    
     /* delegate funcs of moments cell */
     
     func isSelectionEnable(row row: Int, cellIndex: Int, cell: MPMomentsListViewCell) -> Bool {
@@ -206,6 +199,24 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
+    // MARK: - handlers
+    
+    @objc private func onTapDoneButton() {
+        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
+        if let delegate = self.delegate {
+            MPCheckMarkStorage.sharedInstance.numberOfSelectedObv.removeAllObserver()
+            delegate.pickedAssets(self, didFinishPickingAssets: MPCheckMarkStorage.sharedInstance.getCheckedAssets())
+        }
+    }
+    
+    @objc private func onTapCancelButton() {
+        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
+        if let delegate = self.delegate {
+            MPCheckMarkStorage.sharedInstance.numberOfSelectedObv.removeAllObserver()
+            delegate.pickCancelled(self)
+        }
+    }
+    
     // MARK: - funcs
     
     func prepareData(asstesFetchResults: PHFetchResult) {
@@ -229,13 +240,6 @@ class MPMomentsListViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     // MARK: - private funcs
-    
-    @objc private func onTapDoneButton() {
-        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
-        if let delegate = self.delegate {
-            delegate.pickedAssets(self, didFinishPickingAssets: MPCheckMarkStorage.sharedInstance.getCheckedAssets())
-        }
-    }
     
     private func pushDetailViewController(cellIndex cellIndex: Int, row: Int) {
         let detailVC = MPDetailViewController()

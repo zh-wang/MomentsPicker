@@ -61,14 +61,14 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
         // observers
         // bind number of selected with top right done button enabled & footer view's counter
         MPCheckMarkStorage.sharedInstance.numberOfSelectedObv.addObserverPost("NUMBER_OF_SELECTED_OBV_ASSET_VC",
-            didSetObserver: { [unowned self] oldValue, newValue in
-                self.footerView.updateSelectionCounter()
-                self.toggleDoneAvailability()
-                self.changeTitleWhenSelected()
+            didSetObserver: { [weak self] oldValue, newValue in
+                self?.footerView.updateSelectionCounter()
+                self?.toggleDoneAvailability()
+                self?.changeTitleWhenSelected()
             })
         
         self.cellCheckedObv.addObserverPost("CELL_CHECKED_OBV_ASSET_VC",
-            didSetObserver: { [unowned self] oldValue, newValue in
+            didSetObserver: { [weak self] oldValue, newValue in
                 // only update changed cell
                 var indexPaths: [NSIndexPath] = []
                 let n = oldValue!.count
@@ -78,7 +78,7 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
                     }
                 }
                 if indexPaths.count > 0 {
-                    self.cellGrid.reloadItemsAtIndexPaths(indexPaths)
+                    self?.cellGrid.reloadItemsAtIndexPaths(indexPaths)
                 }
             })
     }
@@ -178,6 +178,7 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
     @objc private func onTapDoneButton() {
         self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
         if let delegate = self.delegate {
+            MPCheckMarkStorage.sharedInstance.numberOfSelectedObv.removeAllObserver()
             delegate.pickedAssets(self, didFinishPickingAssets: MPCheckMarkStorage.sharedInstance.getCheckedAssets())
         }
     }
@@ -185,6 +186,7 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
     @objc private func onTapCancelButton() {
         self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
         if let delegate = self.delegate {
+            MPCheckMarkStorage.sharedInstance.numberOfSelectedObv.removeAllObserver()
             delegate.pickCancelled(self)
         }
     }
@@ -228,35 +230,6 @@ class MPAssetGridViewController: UIViewController, UICollectionViewDelegate, UIC
         detailVC.rowIndex = nil
         detailVC.startCellIndex = indexPath.item
         detailVC.delegate = self.delegate
-        self.navigationController?.pushViewController(detailVC, animated: true)
-    }
-    
-    // MARK: - private funcs
-    
-    private func updateCheckMark(indexPath indexPath: NSIndexPath) {
-        if self.isSelectedTooMany() && self.isSelectingNewItem(indexPath.item) {
-            // Cannot select more, but we can undo selecting for selected items
-        } else {
-            let asset = self.assetsFetchResults![indexPath.item] as! PHAsset
-            cellChecked[indexPath.item] = !cellChecked[indexPath.item]
-            cellGrid.reloadItemsAtIndexPaths([indexPath])
-            if MPCheckMarkStorage.sharedInstance.removeIfAlreadyChecked(cellIndex: indexPath.item, asset: asset) {
-                // already checked, remove it
-            } else {
-                MPCheckMarkStorage.sharedInstance.addEntry(cellIndex: indexPath.item, asset: asset)
-            }
-            
-            self.changeTitleWhenSelected()
-            self.toggleDoneAvailability()
-        }
-    }
-    
-    private func pushDetailViewController(indexPath indexPath: NSIndexPath) {
-        let detailVC = MPDetailViewController()
-        detailVC.config = self.config
-        detailVC.assetsFetchResults = self.assetsFetchResults
-        detailVC.rowIndex = nil
-        detailVC.startCellIndex = indexPath.item
         self.navigationController?.pushViewController(detailVC, animated: true)
     }
     
