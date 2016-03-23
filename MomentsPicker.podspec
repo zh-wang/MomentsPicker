@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "MomentsPicker"
-  s.version          = "1.0.0"
+  s.version          = "1.0.1"
   s.summary          = "iOS Moments-like image picking library"
 
 # This description is used to generate tags and improve search results.
@@ -36,6 +36,8 @@ iOS Moments-like image picking library with multiple selection support.
   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
-  s.frameworks = 'Photos'
   # s.dependency 'AFNetworking', '~> 2.3'
+
+  s.frameworks = 'Photos'
+
 end
